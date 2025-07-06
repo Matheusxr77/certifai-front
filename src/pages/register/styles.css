@@ -1,0 +1,1037 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+    --primary-green: #10b981;
+    --primary-green-dark: #059669;
+    --primary-green-light: #34d399;
+    --primary-blue: #3b82f6;
+    --background-dark: #0f172a;
+    --background-card: #1e293b;
+    --form-background: #334155;
+    --text-light: #f8fafc;
+    --text-secondary: #94a3b8;
+    --input-background: #475569;
+    --input-border: #64748b;
+    --error-color: #ef4444;
+    --success-color: #10b981;
+    --accent-gradient: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --shadow-xl: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    background: var(--background-dark);
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+    color: var(--text-light);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.register-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.register-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(45deg, transparent 30%, rgba(16, 185, 129, 0.05) 50%, transparent 70%),
+        linear-gradient(-45deg, transparent 30%, rgba(59, 130, 246, 0.05) 50%, transparent 70%);
+    pointer-events: none;
+}
+
+.register-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+.register-illustration {
+    display: none;
+}
+
+.register-illustration::before {
+    content: '';
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    background: var(--accent-gradient);
+    border-radius: 50%;
+    opacity: 0.1;
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.1; }
+    50% { transform: scale(1.05); opacity: 0.15; }
+}
+
+.register-illustration img {
+    max-width: 100%;
+    height: auto;
+    max-height: 500px;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+}
+
+.register-form-container {
+    width: 100%;
+    max-width: 650px;
+    background: var(--form-background);
+    background-image: linear-gradient(135deg, var(--form-background) 0%, var(--background-card) 100%);
+    padding: 3rem;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+    margin: 0.5rem;
+}
+
+.register-form-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--accent-gradient);
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form-row .input-group {
+    margin: 0;
+}
+
+/* Classe especial para nome completo ocupar dois espaços */
+.form-row .input-group.full-width {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+.form-title {
+    color: var(--text-light);
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 2rem 0;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #059669 0%, #1e40af 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+}
+
+.form-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(135deg, #059669 0%, #1e40af 100%);
+    border-radius: 2px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+}
+
+.input-group label {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input-group input {
+    background: var(--input-background);
+    border: 2px solid var(--input-border);
+    border-radius: 16px;
+    padding: 1rem 1.5rem;
+    color: var(--text-light);
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.input-group input::placeholder {
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    transform: translateY(-2px);
+}
+
+.input-group input:hover {
+    border-color: var(--primary-green-light);
+}
+
+.input-group select {
+    background: var(--input-background);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 1rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5rem 1.5rem;
+    border: 2px solid var(--input-border);
+    border-radius: 16px;
+    padding: 1rem 3rem 1rem 1.5rem;
+    color: var(--text-light);
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.input-group select::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    transition: left 0.5s ease;
+}
+
+.input-group select:hover::before {
+    left: 100%;
+}
+
+.input-group select:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    transform: translateY(-2px);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2310b981' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}
+
+.input-group select:hover {
+    border-color: var(--primary-green-light);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2310b981' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}
+
+.input-group select option {
+    background: var(--form-background);
+    color: var(--text-light);
+    padding: 1rem 1.5rem;
+    font-weight: 500;
+    font-size: 1rem;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.input-group select option:hover,
+.input-group select option:focus {
+    background: var(--primary-green);
+    color: white;
+}
+
+.input-group select option:checked {
+    background: var(--primary-green);
+    color: white;
+    font-weight: 600;
+}
+
+.input-group select option:disabled {
+    background: var(--input-border);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+}
+
+.input-group select.error {
+    border-color: var(--error-color);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ef4444' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}
+
+.input-group select.error:focus {
+    border-color: var(--error-color);
+}
+
+/* Estilo customizado para o select quando vazio */
+.input-group select[value=""] {
+    color: var(--text-secondary);
+}
+
+.input-group select[value=""]:not(:focus) {
+    color: var(--text-secondary);
+}
+
+/* Animação para o select */
+.input-group select:active {
+    transform: translateY(-1px) scale(0.99);
+}
+
+/* Melhoria para dark mode */
+@media (prefers-color-scheme: dark) {
+    .input-group select {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23cbd5e1' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    }
+    
+    .input-group select:hover,
+    .input-group select:focus {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2310b981' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    }
+}
+
+/* Estilização para o wrapper do select */
+.input-group {
+    position: relative;
+}
+
+.input-group::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 3rem;
+    pointer-events: none;
+    border-radius: 0 16px 16px 0;
+    transition: all 0.3s ease;
+}
+
+.input-group input.error {
+    border-color: var(--error-color);
+}
+
+.input-group input.error:focus {
+    border-color: var(--error-color);
+}
+
+.error-message {
+    color: var(--error-color);
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.error-message::before {
+    content: '⚠';
+    font-size: 0.9rem;
+}
+
+.register-button {
+    background: var(--accent-gradient);
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 16px;
+    padding: 1.25rem 2rem;
+    min-height: 56px;
+    height: 56px;
+    min-width: 150px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.register-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.register-button:hover::before {
+    left: 100%;
+}
+
+.register-button:active {
+    transform: translateY(-1px);
+}
+
+.login-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: -1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.login-text {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+.login-link-button {
+    background: transparent;
+    color: var(--primary-blue);
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 2px solid var(--primary-blue);
+    border-radius: 16px;
+    padding: 0.875rem 2rem;
+    min-height: 48px;
+    height: 48px;
+    min-width: 140px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.login-link-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-blue);
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.login-link-button:hover::before {
+    left: 0;
+}
+
+.login-link-button:hover {
+    color: white;
+}
+
+.login-link-button:active {
+    transform: translateY(-1px);
+}
+
+/* Container para botões lado a lado no registro */
+.register-buttons-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.register-buttons-container .register-button {
+    flex: 1;
+    margin: 0;
+}
+
+/* Reutilizar estilos do divisor vertical do login */
+.register-buttons-container .divider-vertical {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    min-width: 40px;
+    position: relative;
+}
+
+.register-buttons-container .divider-vertical::before,
+.register-buttons-container .divider-vertical::after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 20px;
+    background: linear-gradient(to bottom, transparent, var(--input-border), transparent);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.register-buttons-container .divider-vertical::before {
+    left: -8px;
+}
+
+.register-buttons-container .divider-vertical::after {
+    right: -8px;
+}
+
+.register-buttons-container .divider-vertical span {
+    padding: 0 0.5rem;
+    background: var(--form-background);
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+}
+
+/* Botão desabilitado no registro */
+.register-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.register-button:disabled:hover {
+    background: var(--accent-gradient);
+    transform: none;
+}
+
+/* Garantir que todos os botões dentro do container tenham o mesmo tamanho */
+.register-buttons-container .register-button {
+    min-height: 56px;
+    height: 56px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 1.25rem 2rem;
+    box-sizing: border-box;
+}
+
+.register-buttons-container .google-login-button {
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 700;
+    border: 2px solid var(--input-border);
+    border-radius: 16px;
+    padding: 1.25rem 2rem;
+    min-height: 56px;
+    height: 56px;
+    min-width: 150px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.google-login-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.google-login-button:hover {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+}
+
+.google-login-button:hover::before {
+    left: 100%;
+}
+
+.google-login-button:active {
+    transform: translateY(-1px);
+}
+
+.google-login-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.google-login-button:disabled:hover {
+    border-color: var(--input-border);
+    color: var(--text-secondary);
+    transform: none;
+}
+
+.google-login-button img {
+    width: 20px;
+    height: 20px;
+    max-width: 20px;
+    max-height: 20px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.google-login-button span {
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Garantir que o botão secundário também tenha a altura padrão */
+.login-section .login-link-button {
+    min-height: 48px;
+    height: 48px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .register-form-container {
+        padding: 2.5rem;
+        margin: 0.5rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .register-form-container {
+        width: 100%;
+        max-width: 500px;
+        padding: 2rem;
+        margin: 0.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .register-page {
+        padding: 1rem;
+    }
+    
+    .form-title {
+        font-size: 2rem;
+    }
+
+    .register-form-container {
+        padding: 1.5rem;
+        border-radius: 20px;
+        margin: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .register-page {
+        padding: 0.75rem;
+    }
+    
+    .form-title {
+        font-size: 1.75rem;
+    }
+
+    .register-form-container {
+        padding: 1.25rem;
+        margin: 0;
+    }
+    
+    .input-group input {
+        padding: 1rem 1.25rem;
+    }
+    
+    .register-button {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+        min-height: 56px;
+        height: 56px;
+    }
+}
+
+/* Responsividade para botões de registro lado a lado */
+@media (max-width: 768px) {
+    .register-buttons-container {
+        flex-direction: column !important;
+        gap: 1rem !important;
+        position: relative !important;
+    }
+    
+    .register-buttons-container .register-button,
+    .register-buttons-container .google-login-button {
+        width: 100% !important;
+        min-height: 52px !important;
+        height: 52px !important;
+        font-size: 0.9rem !important;
+        padding: 1rem 1.5rem !important;
+        flex: none !important;
+    }
+    
+    .register-buttons-container .divider-vertical {
+        display: none !important;
+    }
+    
+    /* Criar divisor "ou" responsivo entre os botões usando pseudo-elemento no container */
+    .register-buttons-container::after {
+        content: 'ou' !important;
+        position: absolute !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        background: var(--form-background) !important;
+        color: var(--text-secondary) !important;
+        font-size: 0.875rem !important;
+        padding: 0.5rem 1rem !important;
+        border-radius: 0.5rem !important;
+        z-index: 2 !important;
+        border: 1px solid var(--input-border) !important;
+        font-weight: 500 !important;
+    }
+    
+    .register-buttons-container::before {
+        content: '' !important;
+        position: absolute !important;
+        left: 10% !important;
+        right: 10% !important;
+        top: 50% !important;
+        height: 1px !important;
+        background: linear-gradient(to right, transparent, var(--input-border), transparent) !important;
+        transform: translateY(-50%) !important;
+        z-index: 1 !important;
+    }
+    
+    .register-buttons-container .google-login-button {
+        order: 2 !important;
+    }
+    
+    .register-buttons-container .register-button {
+        order: 1 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .register-buttons-container {
+        gap: 0.75rem;
+    }
+    
+    .register-buttons-container .register-button,
+    .register-buttons-container .google-login-button {
+        font-size: 0.85rem;
+        padding: 1rem 1.25rem;
+        min-height: 48px;
+        height: 48px;
+    }
+    
+    .login-link-button {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.85rem;
+        min-height: 44px;
+        height: 44px;
+    }
+}
+
+/* Animações de entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.register-form-container {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.input-group:nth-child(2) {
+    animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+.input-group:nth-child(3) {
+    animation: fadeInUp 0.6s ease-out 0.15s both;
+}
+
+.input-group:nth-child(4) {
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.input-group:nth-child(5) {
+    animation: fadeInUp 0.6s ease-out 0.25s both;
+}
+
+.input-group:nth-child(6) {
+    animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+.register-button {
+    animation: fadeInUp 0.6s ease-out 0.35s both;
+}
+
+.login-section {
+    animation: fadeInUp 0.6s ease-out 0.4s both;
+}
+
+/* Melhorias específicas para o select de papel */
+.input-group select[name="papel"] {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8' stroke-width='2'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'/%3e%3c/svg%3e"), url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: left 1rem center, right 1rem center;
+    background-repeat: no-repeat, no-repeat;
+    background-size: 1.25rem 1.25rem, 1.5rem 1.5rem;
+    padding-left: 3rem;
+}
+
+.input-group select[name="papel"]:focus {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2310b981' stroke-width='2'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'/%3e%3c/svg%3e"), url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2310b981' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}
+
+.input-group select[name="papel"]:hover {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2310b981' stroke-width='2'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'/%3e%3c/svg%3e"), url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2310b981' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}
+
+/* Animação suave para o select */
+.input-group select {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input-group select:focus {
+    animation: selectFocus 0.3s ease-out;
+}
+
+@keyframes selectFocus {
+    0% {
+        transform: translateY(0px) scale(1);
+    }
+    50% {
+        transform: translateY(-3px) scale(1.02);
+    }
+    100% {
+        transform: translateY(-2px) scale(1);
+    }
+}
+
+/* Estilo para quando o select está sendo selecionado */
+.input-group select:active {
+    transform: translateY(-1px) scale(0.99);
+}
+
+/* Melhorias para o placeholder do select */
+.input-group select option[value=""] {
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Responsividade para o select */
+@media (max-width: 768px) {
+    .input-group select {
+        padding: 0.875rem 2.5rem 0.875rem 1.25rem;
+        font-size: 0.95rem;
+        background-size: 1.25rem 1.25rem;
+        background-position: right 0.75rem center;
+    }
+    
+    .input-group select[name="papel"] {
+        background-size: 1rem 1rem, 1.25rem 1.25rem;
+        background-position: left 0.75rem center, right 0.75rem center;
+        padding-left: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .input-group select {
+        padding: 0.75rem 2rem 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .input-group select[name="papel"] {
+        background-size: 0.875rem 0.875rem, 1rem 1rem;
+        background-position: left 0.625rem center, right 0.625rem center;
+        padding-left: 2rem;
+    }
+}
+
+/* Estilo para quando o select tem valor selecionado */
+.input-group select:not([value=""]) {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+/* Efeito de hover mais suave */
+.input-group select:hover {
+    transform: translateY(-1px);
+}
+
+/* Estilo para o label do select */
+.input-group label[for="papel"] {
+    position: relative;
+}
+
+.input-group label[for="papel"]::after {
+    content: '👤';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    opacity: 0.6;
+}
+
+/* Animação para o focus do select */
+.input-group select:focus-visible {
+    animation: selectPulse 0.6s ease-in-out;
+}
+
+@keyframes selectPulse {
+    0% {
+        transform: scale(1);
+    }
+    70% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Estilo para o dropdown quando aberto */
+.input-group select:focus option {
+    background: var(--form-background);
+    color: var(--text-light);
+}
+
+/* Melhoria na transição entre estados */
+.input-group select,
+.input-group select option {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Estilo personalizado para as opções do select */
+.input-group select option {
+    background: var(--form-background);
+    color: var(--text-light);
+    padding: 1rem;
+    font-size: 1rem;
+    border: none;
+    margin: 0.25rem 0;
+    border-radius: 8px;
+}
+
+.input-group select option:hover {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.2) 100%);
+    color: var(--primary-green-light);
+}
+
+/* Indicador visual para opção selecionada */
+.input-group select option:checked {
+    background: var(--accent-gradient);
+    color: white;
+    font-weight: 700;
+}
+
+/* Estilo para quando o select está inválido */
+.input-group select.error {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+    20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+/* Compatibilidade cross-browser para o select */
+.input-group select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* Remove o X do IE */
+    &::-ms-expand {
+        display: none;
+    }
+}
+
+/* Estilo para Firefox */
+@-moz-document url-prefix() {
+    .input-group select {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 1rem center;
+        padding-right: 3rem;
+    }
+}
+
+/* Estilo para Safari */
+@supports (-webkit-appearance: none) {
+    .input-group select {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    }
+}
+
+/* Melhorias finais para o select */
+.input-group select {
+    /* Força o cursor pointer em todos os navegadores */
+    cursor: pointer !important;
+    
+    /* Garante que o texto não seja selecionável */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    
+    /* Melhora a renderização de texto */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    /* Garante que o select mantenha o foco visível */
+    outline: none;
+    outline-offset: 2px;
+}
+
+/* Estilo para o estado de focus visible (acessibilidade) */
+.input-group select:focus-visible {
+    outline: 2px solid var(--primary-green);
+    outline-offset: 2px;
+}
+
+/* Melhoria na acessibilidade */
+.input-group select[aria-invalid="true"] {
+    border-color: var(--error-color);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ef4444' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}

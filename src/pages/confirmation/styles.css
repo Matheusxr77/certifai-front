@@ -1,0 +1,197 @@
+/* Confirmation Page Styles */
+.confirmation-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+}
+
+.confirmation-card {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation-header h1 {
+    color: #2d3748;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    line-height: 1.2;
+}
+
+.confirmation-content {
+    margin-bottom: 40px;
+}
+
+.confirmation-loading,
+.confirmation-success,
+.confirmation-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.confirmation-loading p,
+.confirmation-success p,
+.confirmation-error p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #4a5568;
+    margin: 0;
+}
+
+.loading-icon,
+.success-icon,
+.error-icon {
+    font-size: 4rem;
+    margin-bottom: 10px;
+}
+
+.loading-icon {
+    color: #667eea;
+}
+
+.success-icon {
+    color: #48bb78;
+}
+
+.error-icon {
+    color: #f56565;
+}
+
+.spinning {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.confirmation-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.error-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-button,
+.retry-button {
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+}
+
+.login-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.login-button.secondary {
+    background: transparent;
+    color: #667eea;
+    border: 2px solid #667eea;
+}
+
+.login-button.secondary:hover {
+    background: #667eea;
+    color: white;
+}
+
+.retry-button {
+    background: #48bb78;
+    color: white;
+}
+
+.retry-button:hover {
+    background: #38a169;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(72, 187, 120, 0.3);
+}
+
+.login-button:focus,
+.retry-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+}
+
+.login-button:disabled,
+.retry-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .confirmation-container {
+        padding: 15px;
+    }
+    
+    .confirmation-card {
+        padding: 30px 20px;
+    }
+    
+    .confirmation-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .loading-icon,
+    .success-icon,
+    .error-icon {
+        font-size: 3rem;
+    }
+    
+    .confirmation-loading p,
+    .confirmation-success p,
+    .confirmation-error p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .confirmation-card {
+        padding: 25px 15px;
+    }
+    
+    .confirmation-header h1 {
+        font-size: 1.3rem;
+    }
+    
+    .loading-icon,
+    .success-icon,
+    .error-icon {
+        font-size: 2.5rem;
+    }
+}
