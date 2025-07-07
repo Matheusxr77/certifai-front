@@ -1,5 +1,5 @@
 import './styles.css';
-import illustration from '../../../public/certifai.png';
+import illustration from '../../assets/images/certifai.png';
 import { useLoginController } from './indexController.tsx';
 
 const Login = () => {
