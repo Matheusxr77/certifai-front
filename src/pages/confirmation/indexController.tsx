@@ -1,77 +1,83 @@
-import { 
-    useState, 
-    useEffect 
+import {
+    useState,
+    useEffect
 } from 'react';
-import { 
-    useNavigate, 
-    useSearchParams 
+import {
+    useNavigate,
+    useSearchParams
 } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { 
+import {
     CONFIRMATION_CONSTANTS,
-    CONFIRMATION_ERROR_MESSAGES 
+    CONFIRMATION_ERROR_MESSAGES
 } from './indexModel';
 
-import type { 
+import type {
     ConfirmationControllerReturn,
-    ConfirmationErrorType 
+    ConfirmationErrorType
 } from './indexModel';
+import api from '../../api';
 
 export const useConfirmationController = (): ConfirmationControllerReturn => {
     const [isLoading, setIsLoading] = useState(true);
     const [isVerified, setIsVerified] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [message, setMessage] = useState(CONFIRMATION_CONSTANTS.LOADING_MESSAGE);
+    const [hasAttemptedVerification, setHasAttemptedVerification] = useState(false);
 
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
+        if (hasAttemptedVerification) return;
+
         const token = searchParams.get('token');
-        const email = searchParams.get('email');
-        
-        if (token || email) {
-            verifyEmail(token || undefined);
+
+        if (token) {
+            setHasAttemptedVerification(true);
+            verifyEmail(token);
         } else {
-            // Se não há token, assume que já foi verificado
             setIsLoading(false);
-            setIsVerified(true);
-            setMessage(CONFIRMATION_CONSTANTS.SUCCESS_MESSAGE);
+            setIsVerified(false);
+            setMessage(CONFIRMATION_CONSTANTS.ERROR_MESSAGE);
         }
-    }, [searchParams]);
+    }, [hasAttemptedVerification]);
+
+
+    const [isVerifying, setIsVerifying] = useState(false);
 
     const verifyEmail = async (token?: string) => {
+        if (isVerifying) return;
+        setIsVerifying(true);
+
         try {
             setIsLoading(true);
             setError(null);
-            
-            // Simula verificação do email
-            // Em um cenário real, aqui seria feita a chamada para a API
             await new Promise(resolve => setTimeout(resolve, 1500));
-            
-            // Simula sucesso na verificação baseado no token
-            const isSuccess = token ? Math.random() > 0.1 : true; // 90% de chance de sucesso com token
-            
-            if (isSuccess) {
+
+            if (!token) throw new Error('INVALID_TOKEN');
+
+            const response = await api.get(`/auth/verify?token=${token}`);
+
+            if (response.status === 200) {
                 setIsVerified(true);
-                setMessage(CONFIRMATION_CONSTANTS.SUCCESS_MESSAGE);
-                toast.success('E-mail verificado com sucesso!');
+                setMessage(response.data || CONFIRMATION_CONSTANTS.SUCCESS_MESSAGE);
+                toast.success(response.data || 'E-mail verificado com sucesso!');
             } else {
                 throw new Error('INVALID_TOKEN');
             }
-        } catch (error) {
-            const errorType = (error as Error).message as ConfirmationErrorType;
-            const errorMessage = getErrorMessage(errorType);
-            
+        } catch (error: any) {
+            const errorMessage = error?.response?.data || getErrorMessage(error.message as ConfirmationErrorType);
             setError(errorMessage);
             setIsVerified(false);
             setMessage(CONFIRMATION_CONSTANTS.ERROR_MESSAGE);
             toast.error(errorMessage);
-            
         } finally {
             setIsLoading(false);
+            setIsVerifying(false);
         }
     };
+
 
     const getErrorMessage = (errorType: ConfirmationErrorType): string => {
         switch (errorType) {
