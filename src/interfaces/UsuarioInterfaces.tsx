@@ -34,10 +34,10 @@ export interface UsuarioPreferences {
 export interface UsuarioUpdateData {
     name?: string;
     email?: string;
+    emailVerified?: boolean;
     telefone?: string;
     role?: string;
     avatar?: string;
-    biografia?: string;
     preferences?: Partial<UsuarioPreferences>;
 }
 
