@@ -7,7 +7,8 @@ import {
     FiBook,
     FiEdit3,
     FiBarChart,
-    FiCheckSquare
+    FiCheckSquare,
+    FiUser
 } from 'react-icons/fi';
 import { 
     FaBoxOpen, 
@@ -50,6 +51,7 @@ export interface SidebarIcons {
     edit: ReactElement;
     barChart: ReactElement;
     checkSquare: ReactElement;
+    user: ReactElement;
 }
 
 // Configuração dos ícones do sidebar
@@ -70,7 +72,8 @@ export const sidebarIcons: SidebarIcons = {
     book: <FiBook />,
     edit: <FiEdit3 />,
     barChart: <FiBarChart />,
-    checkSquare: <FiCheckSquare />
+    checkSquare: <FiCheckSquare />,
+    user: <FiUser />
 };
 
 // Configuração dos itens de navegação

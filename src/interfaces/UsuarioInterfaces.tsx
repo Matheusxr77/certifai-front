@@ -3,10 +3,7 @@ export interface UsuarioResponse {
     id: number;
     name: string;
     email: string;
-    telefone?: string;
     role?: string;
-    createdAt?: string;
-    updatedAt?: string;
 }
 
 // Interface para dados de perfil do usuário
@@ -14,31 +11,7 @@ export interface UsuarioProfile {
     id: number;
     name: string;
     email: string;
-    telefone?: string;
     role?: string;
-    avatar?: string;
-    biografia?: string;
-    preferences?: UsuarioPreferences;
-}
-
-// Interface para preferências do usuário
-export interface UsuarioPreferences {
-    theme?: 'light' | 'dark' | 'auto';
-    language?: string;
-    notifications?: boolean;
-    emailNotifications?: boolean;
-    autoSave?: boolean;
-}
-
-// Interface para atualização de dados do usuário
-export interface UsuarioUpdateData {
-    name?: string;
-    email?: string;
-    emailVerified?: boolean;
-    telefone?: string;
-    role?: string;
-    avatar?: string;
-    preferences?: Partial<UsuarioPreferences>;
 }
 
 // Interface para filtros de usuário
@@ -47,8 +20,6 @@ export interface UsuarioFilters {
     email?: string;
     role?: string;
     isActive?: boolean;
-    createdAfter?: string;
-    createdBefore?: string;
 }
 
 // Interface para listagem de usuários
@@ -73,7 +44,7 @@ export interface UsuarioValidation {
 }
 
 // Tipos para diferentes papéis de usuário
-export type UsuarioRole = 'admin' | 'professor' | 'estudante' | 'guest';
+export type UsuarioRole = 'admin' | 'professor' | 'estudante';
 
 // Interface para permissões do usuário
 export interface UsuarioPermissions {

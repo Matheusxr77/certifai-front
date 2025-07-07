@@ -30,9 +30,8 @@ export const useRegisterController = (): RegisterControllerHook & {
 
     // Constantes locais dentro do hook
     const ROLE_OPTIONS: RoleOption[] = [
-        { value: 'ESTUDANTE', label: 'Estudante' },
-        { value: 'PROFESSOR', label: 'Professor' },
-        { value: 'ADMIN', label: 'Administrador' }
+        { value: 'ESTUDANTE', label: 'Como Estudante' },
+        { value: 'PROFESSOR', label: 'Como Professor' }
     ];
 
     const RegisterValidation = {
@@ -75,9 +74,7 @@ export const useRegisterController = (): RegisterControllerHook & {
                 success: true,
                 data: data.data.data
             };
-        } catch (error) {
-            console.error('Erro ao registrar usuário:', error);
-            
+        } catch (error) {            
             return {
                 success: false,
                 message: 'Erro ao registrar usuário'
@@ -111,7 +108,7 @@ export const useRegisterController = (): RegisterControllerHook & {
         if (!password.trim()) {
             newErrors.password = 'Senha é obrigatória';
         } else if (!RegisterValidation.validatePassword(password)) {
-            newErrors.password = 'Senha deve ter pelo menos 6 caracteres';
+            newErrors.password = 'Senha deve ter pelo menos 8 caracteres';
         }
 
         // Validação da confirmação de senha
@@ -156,7 +153,7 @@ export const useRegisterController = (): RegisterControllerHook & {
                     toast.success('Usuário registrado e logado com sucesso!');
                 } else {
                     navigate('/login');
-                    toast.success('Usuário registrado com sucesso! Faça login para continuar.');
+                    toast.success('Usuário registrado com sucesso, confirme seu email.');
                 }
             } else {
                 setErrors({ general: result.message || 'Erro ao registrar usuário' });
@@ -183,7 +180,6 @@ export const useRegisterController = (): RegisterControllerHook & {
             navigate('/dashboard');
             toast.success('Usuário registrado e logado com sucesso!');
         } catch (error) {
-            console.error('Erro no registro com Google:', error);
             setErrors({ general: GOOGLE_REGISTER_CONSTANTS.ERROR_MESSAGE });
             toast.error(GOOGLE_REGISTER_CONSTANTS.ERROR_MESSAGE);
         } finally {
@@ -210,7 +206,7 @@ export const useRegisterController = (): RegisterControllerHook & {
         if (!password.trim()) {
             newErrors.password = 'Senha é obrigatória';
         } else if (!RegisterValidation.validatePassword(password)) {
-            newErrors.password = 'Senha deve ter pelo menos 6 caracteres';
+            newErrors.password = 'Senha deve ter pelo menos 8 caracteres';
         }
 
         if (!confirmPassword.trim()) {

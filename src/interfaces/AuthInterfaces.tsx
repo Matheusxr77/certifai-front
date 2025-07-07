@@ -130,7 +130,6 @@ export interface ExternalAuthData {
     providerUserId: string;
     email?: string;
     name?: string;
-    avatar?: string;
 }
 
 // Interface para permissões de acesso

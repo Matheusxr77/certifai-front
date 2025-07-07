@@ -2,8 +2,12 @@ import './styles.css';
 import { NavLink } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { useSidebarController } from './indexController';
+import { 
+    navigationItems, 
+    sidebarIcons 
+} from './indexModel';
+
 import type { SidebarProps } from '../../interfaces/SidebarInterfaces.tsx';
-import { navigationItems, sidebarIcons } from './indexModel';
 
 const Sidebar = ({ isExpanded, toggleSidebar }: SidebarProps) => {
     const { 

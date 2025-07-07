@@ -125,7 +125,7 @@ body {
     max-width: 550px;
     background: var(--form-background);
     background-image: linear-gradient(135deg, var(--form-background) 0%, var(--background-card) 100%);
-    padding: 3rem;
+    padding: 2rem;
     border-radius: 24px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);

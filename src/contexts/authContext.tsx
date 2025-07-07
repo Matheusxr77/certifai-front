@@ -35,7 +35,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             setUser(usuario);
             return true;
         } catch (error) {
-            console.error('Erro ao fazer login:', error);
             return false;
         }
     };
