@@ -85,7 +85,6 @@ export const useHomeController = (): HomeControllerReturn => {
             }
         } catch (err) {
             setError(createError('UNKNOWN', HOME_ERROR_MESSAGES.NAVIGATION_FAILED));
-            console.error('Erro ao navegar para card:', err);
         }
     };
 
@@ -107,7 +106,6 @@ export const useHomeController = (): HomeControllerReturn => {
         } catch (err) {
             const errorMessage = createError('NETWORK', HOME_ERROR_MESSAGES.REFRESH_FAILED);
             setError(errorMessage);
-            console.error('Erro ao atualizar dashboard:', err);
         } finally {
             setIsLoading(false);
         }

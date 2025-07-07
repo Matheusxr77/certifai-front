@@ -65,7 +65,6 @@ export const useGoogleLoginController = (props: GoogleLoginButtonProps) => {
                 payload.name
             );
         } catch (error) {
-            console.error('Erro ao processar resposta do Google:', error);
             onError(ERROR_MESSAGES.PROCESSING_ERROR);
         }
     };

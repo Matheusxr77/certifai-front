@@ -33,7 +33,6 @@ export const useLoginController = (): LoginControllerHook & {
                 toast.error('Email ou senha inválidos.');
             }
         } catch (error) {
-            console.error("Falha na tentativa de login:", error);
             const errorMessage = 'Ocorreu um erro ao tentar fazer login. Tente novamente.';
             setError(errorMessage);
             toast.error(errorMessage);

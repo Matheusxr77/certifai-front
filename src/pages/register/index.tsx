@@ -58,7 +58,7 @@ const Register = () => {
                             </div>
 
                             <div className="input-group">
-                                <label htmlFor="role">Perfil</label>
+                                <label htmlFor="role">Como prefere usar o CertifAI?</label>
                                 <select
                                     id="role"
                                     name="role"
