@@ -88,36 +88,48 @@ export const navigationItems: NavigationItem[] = [
     {
         id: 'banco-questoes',
         label: 'Banco de Questões',
-        path: '/banco-questoes',
+        // path: '/banco-questoes',
+        path: '/under-construction',
         icon: sidebarIcons.book,
         tooltipId: 'nav-tooltip'
     },
     {
         id: 'simulacao-provas',
         label: 'Simulação de Provas',
-        path: '/simulacao-provas',
+        // path: '/simulacao-provas',
+        path: '/under-construction',
         icon: sidebarIcons.edit,
         tooltipId: 'nav-tooltip'
     },
     {
         id: 'relatorio-desempenho',
         label: 'Relatório de Desempenho',
-        path: '/relatorio-desempenho',
+        // path: '/relatorio-desempenho',
+        path: '/under-construction',
         icon: sidebarIcons.barChart,
         tooltipId: 'nav-tooltip'
     },
     {
         id: 'checklist-preparacao',
         label: 'Checklist de Preparação',
-        path: '/checklist-preparacao',
+        // path: '/checklist-preparacao',
+        path: '/under-construction',
         icon: sidebarIcons.checkSquare,
         tooltipId: 'nav-tooltip'
     },
     {
         id: 'calendario-estudos',
         label: 'Calendário de Estudos',
-        path: '/calendario-estudos',
+        // path: '/calendario-estudos',
+        path: '/under-construction',
         icon: sidebarIcons.calendar,
+        tooltipId: 'nav-tooltip'
+    },
+    {
+        id: 'profile',
+        label: 'Perfil',
+        path: '/profile',
+        icon: sidebarIcons.user,
         tooltipId: 'nav-tooltip'
     }
 ];

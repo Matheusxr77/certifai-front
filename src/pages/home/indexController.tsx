@@ -1,11 +1,15 @@
-import { useState, useEffect } from 'react';
+import { 
+    useState, 
+    useEffect 
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
     FiCalendar,
     FiBook,
     FiEdit3,
     FiBarChart,
-    FiCheckSquare
+    FiCheckSquare,
+    FiUser
 } from 'react-icons/fi';
 import { 
     dashboardCardsConfig, 
@@ -37,6 +41,7 @@ export const useHomeController = (): HomeControllerReturn => {
             'FiEdit3': <FiEdit3 className="card-icon" />,
             'FiBarChart': <FiBarChart className="card-icon" />,
             'FiCheckSquare': <FiCheckSquare className="card-icon" />,
+            'FiUser': <FiUser className="card-icon" />
         };
         return iconMap[iconName] || <FiCalendar className="card-icon" />;
     };
@@ -125,7 +130,6 @@ export const useHomeController = (): HomeControllerReturn => {
     // Efeito para inicializar dados
     useEffect(() => {
         // Aqui você pode fazer chamadas iniciais para carregar dados
-        // Por exemplo, buscar estatísticas ou configurações do usuário
         const activeCards = getActiveCards();
         setDashboardCards(activeCards);
     }, []);

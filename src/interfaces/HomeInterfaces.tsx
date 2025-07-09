@@ -25,9 +25,3 @@ export type DashboardCardValidation = {
 };
 
 export type HomeErrorType = 'NETWORK' | 'VALIDATION' | 'UNKNOWN';
-
-export interface HomeError {
-    type: HomeErrorType;
-    message: string;
-    details?: string;
-}

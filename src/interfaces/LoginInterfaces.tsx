@@ -1,5 +1,4 @@
 import type { UsuarioResponse } from './UsuarioInterfaces.tsx';
-import type { AbstractResponse } from './AbstractInterfaces.tsx';
 import type { RoleOption } from '../pages/register/indexModel.tsx';
 
 // Interface para resposta de login
@@ -7,9 +6,6 @@ export interface LoginResponse {
     token: string;
     usuario: UsuarioResponse;
 }
-
-// Interface para resposta de login usando AbstractResponse
-export interface LoginApiResponse extends AbstractResponse<LoginResponse> {}
 
 // Interface para estado do login
 export interface LoginState {
@@ -25,6 +21,7 @@ export interface LoginActions {
     setPassword: (password: string) => void;
     handleSubmit: (e: React.FormEvent) => void;
     handleRegisterClick: () => void;
+    handleForgotPasswordClick: (e: React.MouseEvent) => void;
     validateForm: () => boolean;
     clearErrors: () => void;
 }

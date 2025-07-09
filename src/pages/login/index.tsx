@@ -12,15 +12,14 @@ const Login = () => {
         error,
         handleSubmit,
         handleRegisterClick,
-        handleGoogleLogin
+        handleGoogleLogin,
+        handleForgotPasswordClick
     } = useLoginController();
 
     return (
         <div className="login-page">
             <div className="login-wrapper">
-                <div className="login-illustration">
-                    <img src={illustration} alt="Ilustração de uma barbearia" />
-                </div>
+                <img src={illustration} alt="Ilustração da logo do CertifAI" />
 
                 <div className="login-form-container">
                     <form className="login-form" onSubmit={handleSubmit}>
@@ -50,7 +49,11 @@ const Login = () => {
                             />
                         </div>
 
-                        <a href="#" className="forgot-password">
+                        <a 
+                            href="#" 
+                            className="forgot-password"
+                            onClick={handleForgotPasswordClick}
+                        >
                             Esqueceu a senha?
                         </a>
 
