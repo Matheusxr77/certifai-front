@@ -1,5 +1,6 @@
 import './styles.css';
 import illustration from '../../assets/images/certifai.png';
+import google from '../../assets/images/google-logo.png';
 import { useLoginController } from './indexController.tsx';
 
 const Login = () => {
@@ -71,7 +72,7 @@ const Login = () => {
                                 className="google-login-button"
                                 disabled={isLoading}>
                                 <img
-                                    src="../../public/google-logo.png" 
+                                    src={google} 
                                     alt="Google logo"
                                     className="w-3 h-3"
                                 />
