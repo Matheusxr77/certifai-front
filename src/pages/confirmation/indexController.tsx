@@ -24,9 +24,10 @@ export const useConfirmationController = (): ConfirmationControllerReturn => {
     const [error, setError] = useState<string | null>(null);
     const [message, setMessage] = useState(CONFIRMATION_CONSTANTS.LOADING_MESSAGE);
     const [hasAttemptedVerification, setHasAttemptedVerification] = useState(false);
+    const [isVerifying, setIsVerifying] = useState(false);
+    const [searchParams] = useSearchParams();
 
     const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
 
     useEffect(() => {
         if (hasAttemptedVerification) return;
@@ -42,9 +43,6 @@ export const useConfirmationController = (): ConfirmationControllerReturn => {
             setMessage(CONFIRMATION_CONSTANTS.ERROR_MESSAGE);
         }
     }, [hasAttemptedVerification]);
-
-
-    const [isVerifying, setIsVerifying] = useState(false);
 
     const verifyEmail = async (token?: string) => {
         if (isVerifying) return;

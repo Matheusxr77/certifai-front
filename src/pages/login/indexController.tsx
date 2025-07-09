@@ -8,13 +8,14 @@ import type { LoginControllerHook } from './indexModel.tsx';
 
 export const useLoginController = (): LoginControllerHook & {
     handleGoogleLogin: () => Promise<void>;
+    handleForgotPasswordClick: (e: React.MouseEvent) => void;
 } => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const { login } = useAuth();
     
+    const { login } = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (event: React.FormEvent) => {
@@ -43,6 +44,11 @@ export const useLoginController = (): LoginControllerHook & {
 
     const handleRegisterClick = () => {
         navigate('/register');
+    };
+
+    const handleForgotPasswordClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        navigate('/forgot-password');
     };
 
     const validateForm = (): boolean => {
@@ -86,8 +92,9 @@ export const useLoginController = (): LoginControllerHook & {
         error,
         handleSubmit,
         handleRegisterClick,
+        handleGoogleLogin,
+        handleForgotPasswordClick,
         validateForm,
-        clearErrors,
-        handleGoogleLogin
+        clearErrors
     };
 };

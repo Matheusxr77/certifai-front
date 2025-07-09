@@ -6,14 +6,6 @@ export interface SidebarProps {
     toggleSidebar: () => void;
 }
 
-// Interface para estado do sidebar
-export interface SidebarState {
-    isExpanded: boolean;
-    navigationItems: NavigationItem[];
-    isLoading: boolean;
-    error: string | null;
-}
-
 // Interface para ações do sidebar
 export interface SidebarActions {
     handleLogout: () => void;

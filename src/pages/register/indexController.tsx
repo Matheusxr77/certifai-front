@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { GOOGLE_REGISTER_CONSTANTS } from './indexModel.tsx';
-import { useAuth } from '../../contexts/authContext.tsx';
 import api from '../../api.tsx';
 
 import type { RegisterResponse } from '../../interfaces/LoginInterfaces.tsx';
@@ -26,7 +25,6 @@ export const useRegisterController = (): RegisterControllerHook & {
     const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
-    const { login } = useAuth();
 
     // Constantes locais dentro do hook
     const ROLE_OPTIONS: RoleOption[] = [
@@ -146,15 +144,9 @@ export const useRegisterController = (): RegisterControllerHook & {
             const result = await registerUser(registerData);
             
             if (result.success) {
-                const loginSuccess = await login(email, password);
+                navigate('/login');
+                toast.success('Usuário registrado com sucesso, confirme seu email.');
                 
-                if (loginSuccess) {
-                    navigate('/dashboard');
-                    toast.success('Usuário registrado e logado com sucesso!');
-                } else {
-                    navigate('/login');
-                    toast.success('Usuário registrado com sucesso, confirme seu email.');
-                }
             } else {
                 setErrors({ general: result.message || 'Erro ao registrar usuário' });
                 toast.error(result.message || 'Erro ao registrar usuário');
