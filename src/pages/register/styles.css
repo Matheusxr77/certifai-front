@@ -133,11 +133,13 @@ body {
 
 .form-row .input-group {
     margin: 0;
+    width: 100%;
 }
 
 /* Classe especial para nome completo ocupar dois espaços */
 .form-row .input-group.full-width {
     grid-column: 1 / -1;
+    width: 100%;
 }
 
 @media (max-width: 600px) {

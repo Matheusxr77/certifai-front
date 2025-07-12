@@ -4,4 +4,5 @@ export interface UsuarioResponse {
     name: string;
     email: string;
     role: string;
+    isActive?: boolean;
 }

@@ -64,61 +64,65 @@ body {
 }
 
 .login-illustration {
-    flex: 1;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    gap: 1rem;
     position: relative;
 }
 
 .login-illustration::before {
     content: '';
     position: absolute;
-    width: 120%;
-    height: 120%;
+    width: 530px;
+    height: 530px;
     background: var(--accent-gradient);
     border-radius: 50%;
-    opacity: 0.1;
+    opacity: 0.7;
     animation: pulse 4s ease-in-out infinite;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
 }
 
 @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 0.1; }
-    50% { transform: scale(1.05); opacity: 0.15; }
+    0%, 100% { 
+        transform: translate(-50%, -50%) scale(1); 
+        opacity: 0.03; 
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.05); 
+        opacity: 0.08; 
+    }
 }
 
 .login-illustration img {
     max-width: 100%;
     height: auto;
-    max-height: 450px;
+    max-height: 400px;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
     position: relative;
     z-index: 1;
-    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
 }
 
-.login-illustration::before {
-    content: '';
-    position: absolute;
-    width: 120%;
-    height: 120%;
+.login-brand-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--text-light);
+    margin: 0;
+    text-align: center;
+    letter-spacing: -1px;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    z-index: 1;
+}
+
+.login-brand-title span {
     background: var(--accent-gradient);
-    border-radius: 50%;
-    opacity: 0.1;
-    animation: pulse 4s ease-in-out infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 0.1; }
-    50% { transform: scale(1.05); opacity: 0.15; }
-}
-
-.login-illustration img {
-    max-width: 100%;
-    height: auto;
-    max-height: 500px;
-    position: relative;
-    z-index: 1;
-    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .login-form-container {
@@ -539,6 +543,49 @@ body {
 .login-button:disabled:hover {
     background: var(--accent-gradient);
     transform: none;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .login-brand-title {
+        font-size: 2.5rem;
+    }
+    
+    .login-illustration::before {
+        width: 600px;
+        height: 600px;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-wrapper {
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .login-illustration {
+        order: -1;
+    }
+    
+    .login-brand-title {
+        font-size: 2rem;
+    }
+    
+    .login-illustration::before {
+        width: 500px;
+        height: 500px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-brand-title {
+        font-size: 1.75rem;
+    }
+    
+    .login-illustration::before {
+        width: 400px;
+        height: 400px;
+    }
 }
 
 /* Responsividade melhorada */

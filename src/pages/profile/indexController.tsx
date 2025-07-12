@@ -87,7 +87,7 @@ export const useProfileController = (): ProfileControllerHook => {
         const client = isOAuthLogin ? apiWithoutAuthHeader : api;
 
         const response = await client.get<AbstractResponse<UsuarioResponse>>(`/auth/me`);
-        console.log(response);
+
         if (response.data.success) {
             const userData = response.data.data;
 
@@ -157,7 +157,6 @@ export const useProfileController = (): ProfileControllerHook => {
             const client = isOAuthLogin ? apiWithoutAuthHeader : api;
 
             const response = await client.put<AbstractResponse<UsuarioResponse>>(`/usuarios/${currentUser.id}`, updateData);
-            console.log('Profile update response:', response);
             
             if (response.data.success) {
                 const userData = response.data.data;

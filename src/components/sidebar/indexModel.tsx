@@ -30,6 +30,7 @@ export interface NavigationItem {
     icon: ReactElement;
     tooltipId: string;
     isActive?: boolean;
+    requiredRole?: string;
 }
 
 // Interface para ícones do sidebar
@@ -124,6 +125,14 @@ export const navigationItems: NavigationItem[] = [
         path: '/under-construction',
         icon: sidebarIcons.calendar,
         tooltipId: 'nav-tooltip'
+    },
+    {
+        id: 'gerenciamento-usuarios',
+        label: 'Gerenciamento de Usuários',
+        path: '/management',
+        icon: sidebarIcons.users,
+        tooltipId: 'nav-tooltip',
+        requiredRole: 'ADMIN'
     },
     {
         id: 'profile',
