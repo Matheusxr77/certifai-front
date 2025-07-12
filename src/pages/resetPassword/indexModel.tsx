@@ -1,8 +1,8 @@
 // Interface para dados de reset de senha
 export interface ResetPasswordData {
     token: string;
-    newPassword: string;
-    confirmPassword: string;
+    novaSenha: string;
+    confirmarNovaSenha: string;
 }
 
 // Interface para resposta do backend
@@ -48,7 +48,7 @@ export const RESET_PASSWORD_CONSTANTS = {
     TOKEN_INVALID_MESSAGE: 'Link de recuperação inválido ou expirado.',
     TOKEN_EXPIRED_MESSAGE: 'Link de recuperação expirado. Solicite um novo.',
     REDIRECT_MESSAGE: 'Redirecionando para o login...',
-    PASSWORD_REQUIREMENTS: 'A senha deve ter pelo menos 6 caracteres.'
+    PASSWORD_REQUIREMENTS: 'A senha deve ter pelo menos 8 caracteres.'
 };
 
 // Mensagens de erro específicas

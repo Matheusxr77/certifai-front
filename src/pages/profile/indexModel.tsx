@@ -105,7 +105,7 @@ export const PROFILE_CONSTANTS = {
     SHOW_DEACTIVATE_FORM_TEXT: 'Desativar Conta',
     HIDE_DEACTIVATE_FORM_TEXT: 'Cancelar',
     DEACTIVATE_DESCRIPTION: 'Ao desativar sua conta, seu registro ficará inativo e não receberá notificações, mas será possível recuperar seus dados logando novamente.',
-    DEACTIVATE_WARNING: 'Atenção: Esta ação desativará sua conta permanentemente. Você será desconectado imediatamente.',
+    DEACTIVATE_WARNING: 'Atenção: Esta ação desativará sua conta e você será desconectado imediatamente.',
     DELETE_SUCCESS_MESSAGE: 'Conta excluída com sucesso. Redirecionando para login...',
     DELETE_BUTTON_TEXT: 'Excluir Conta Permanentemente'
 };
@@ -122,7 +122,7 @@ export const PROFILE_ERROR_MESSAGES = {
     CURRENT_PASSWORD_REQUIRED: 'Senha atual é obrigatória',
     NEW_PASSWORD_REQUIRED: 'Nova senha é obrigatória',
     CONFIRM_PASSWORD_REQUIRED: 'Confirmação de senha é obrigatória',
-    PASSWORD_WEAK: 'A senha deve ter pelo menos 6 caracteres',
+    PASSWORD_WEAK: 'A senha deve ter pelo menos 8 caracteres',
     PASSWORDS_DONT_MATCH: 'As senhas não coincidem',
     CURRENT_PASSWORD_WRONG: 'Senha atual incorreta',
     PASSWORD_SAME_AS_CURRENT: 'A nova senha deve ser diferente da atual',

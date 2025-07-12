@@ -19,7 +19,7 @@ const Login = () => {
     return (
         <div className="login-page">
             <div className="login-wrapper">
-                <img src={illustration} alt="Ilustração da logo do CertifAI" />
+                <img src={illustration} alt="Ilustração da logo do CertifAI" />                   
 
                 <div className="login-form-container">
                     <form className="login-form" onSubmit={handleSubmit}>
