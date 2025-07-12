@@ -6,6 +6,7 @@ export interface DashboardCard {
     icon: string;
     path?: string;
     isActive?: boolean;
+    requiredRole?: string;
 }
 
 // Configuração dos cards do dashboard
@@ -49,6 +50,14 @@ export const dashboardCardsConfig: DashboardCard[] = [
         icon: 'FiCalendar',
         // path: '/calendario-estudos'
         path: '/under-construction'
+    },
+    {
+        id: 'gerenciamento-usuarios',
+        title: 'Gerenciamento de Usuários',
+        description: 'Gerencie usuários, permissões e configurações do sistema.',
+        icon: 'FaUsers',
+        path: '/management',
+        requiredRole: 'ADMIN'
     },
     {
         id: 'profile',

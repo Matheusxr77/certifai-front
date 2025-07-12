@@ -1,8 +1,10 @@
 import { 
     useState, 
-    useEffect 
+    useEffect, 
+    useMemo 
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/authContext';
 import { 
     FiCalendar,
     FiBook,
@@ -11,6 +13,7 @@ import {
     FiCheckSquare,
     FiUser
 } from 'react-icons/fi';
+import { FaUsers } from 'react-icons/fa';
 import { 
     dashboardCardsConfig, 
     HOME_CONSTANTS,
@@ -18,21 +21,20 @@ import {
 } from './indexModel';
 
 import type { 
-    HomeControllerReturn, 
     DashboardCardValidation,
     HomeErrorType
 } from '../../interfaces/HomeInterfaces.tsx';
 import type { DashboardCard } from './indexModel';
 import type { ReactElement } from 'react';
-import { useAuth } from '../../contexts/authContext.tsx';
 
-export const useHomeController = (): HomeControllerReturn => {    
+export const useHomeController = () => {    
     const [isSidebarExpanded, setSidebarExpanded] = useState(true);
     const [dashboardCards, setDashboardCards] = useState<DashboardCard[]>(dashboardCardsConfig);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     
     const navigate = useNavigate();
+    const { user } = useAuth();
     const { isAuthenticated } = useAuth();
 
     useEffect(() => {
@@ -40,7 +42,17 @@ export const useHomeController = (): HomeControllerReturn => {
             navigate('/login');
         }
     }, [isAuthenticated, navigate]);
-    
+
+    // Filter dashboard cards based on user role
+    const filteredDashboardCards = useMemo(() => {
+        return dashboardCardsConfig.filter(card => {
+            if (card.requiredRole) {
+                return user?.role === card.requiredRole;
+            }
+            return true;
+        });
+    }, [user?.role]);
+
     // Função para obter ícones
     const getIcon = (iconName: string): ReactElement => {
         const iconMap: { [key: string]: ReactElement } = {
@@ -49,7 +61,8 @@ export const useHomeController = (): HomeControllerReturn => {
             'FiEdit3': <FiEdit3 className="card-icon" />,
             'FiBarChart': <FiBarChart className="card-icon" />,
             'FiCheckSquare': <FiCheckSquare className="card-icon" />,
-            'FiUser': <FiUser className="card-icon" />
+            'FiUser': <FiUser className="card-icon" />,
+            'FaUsers': <FaUsers className="card-icon" />
         };
         return iconMap[iconName] || <FiCalendar className="card-icon" />;
     };
@@ -150,6 +163,7 @@ export const useHomeController = (): HomeControllerReturn => {
         toggleSidebar,
         navigateToCard,
         refreshDashboard,
-        getIcon
+        getIcon,
+        filteredDashboardCards,
     };
 };

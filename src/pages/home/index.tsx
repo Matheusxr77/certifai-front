@@ -7,13 +7,13 @@ import { useHomeController } from './indexController';
 const Home = () => {
     const { 
         isSidebarExpanded, 
-        dashboardCards, 
         isLoading, 
         error,
         toggleSidebar, 
         navigateToCard,
         refreshDashboard,
-        getIcon 
+        getIcon,
+        filteredDashboardCards
     } = useHomeController();
 
     return (
@@ -52,7 +52,7 @@ const Home = () => {
                 )}
 
                 <section className="dashboard-cards">
-                    {dashboardCards.map(card => (
+                    {filteredDashboardCards.map(card => (
                         <div 
                             key={card.id} 
                             className="card"

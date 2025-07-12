@@ -1,54 +1,127 @@
-# React + TypeScript + Vite
+**CertifAI** - Certificação e Autenticação Inteligente 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+# CertifAI Front-end
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+CertifAI é uma aplicação web moderna desenvolvida em React que oferece funcionalidades relacionadas à certificação e autenticação de usuários. O projeto utiliza uma arquitetura baseada em componentes com padrão MVC e integração com APIs externas.
 
-## Expanding the ESLint configuration
+## 👥 Equipe
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- [Luana Vitória](https://github.com/LuBrito371)
+- [Matheus Marcos](https://github.com/Matheusxr77)
+- [Mayara Karoline](https://github.com/mayeufraferreira)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🚀 Tecnologias Utilizadas
+
+### Core
+- **React 18+** - Biblioteca principal para construção da interface
+- **Vite** - Ferramenta de build e desenvolvimento ultrarrápida
+- **TypeScript** - Superset do JavaScript para tipagem estática
+- **React Router DOM** - Roteamento de páginas SPA
+- **CSS3** - Estilização customizada
+
+### Bibliotecas e Dependências
+- **React Icons (Feather Icons)** - Biblioteca de ícones
+- **React Hooks** - Gerenciamento de estado e efeitos
+- **Google OAuth** - Autenticação social com Google
+
+## 📁 Estrutura do Projeto
+
+```
+src/
+├── assets/
+│   └── images/           # Imagens e recursos estáticos
+├── components/           # Componentes reutilizáveis
+│   └── UnderConstruction/
+│       ├── index.tsx     # Componente de view
+│       ├── indexController.ts  # Lógica de negócio
+│       ├── indexModel.ts # Tipos e interfaces
+│       └── styles.css    # Estilos do componente
+├── pages/               # Páginas da aplicação
+│   ├── register/
+│   │   ├── index.tsx
+│   │   ├── indexController.tsx
+│   │   ├── indexModel.tsx
+│   │   └── styles.css
+│   └── dashboard/       # Outras páginas
+└── ...
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🏗️ Arquitetura
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+O projeto segue uma arquitetura baseada no padrão **MVC (Model-View-Controller)**:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+- **Model** (`indexModel.ts`) - Interfaces, tipos e estruturas de dados
+- **View** (`index.tsx`) - Componentes React e renderização
+- **Controller** (`indexController.ts`) - Lógica de negócio e gerenciamento de estado
+
+### Características Arquiteturais
+- **Componentes Funcionais** - Uso exclusivo de hooks
+- **Custom Hooks** - Controladores como hooks customizados
+- **TypeScript Strict** - Tipagem rigorosa em todo o projeto
+- **Separação de Responsabilidades** - Cada arquivo tem uma responsabilidade específica
+
+## 🔧 Funcionalidades
+
+### Autenticação
+- ✅ Registro de usuários
+- ✅ Login tradicional (email/senha)
+- ✅ Integração com Google OAuth
+- ✅ Validação de formulários em tempo real
+- ✅ Diferentes perfis de usuário
+
+### Interface
+- ✅ Design responsivo
+- ✅ Componentes reutilizáveis
+- ✅ Páginas "Em Construção" animadas
+- ✅ Navegação fluida entre páginas
+- ✅ Feedback visual para ações do usuário
+
+## 📋 Pré-requisitos
+
+- **Node.js** >= 16.0.0
+- **npm** >= 8.0.0 ou **yarn** >= 1.22.0
+- **Git** para controle de versão
+
+## 🚀 Como Executar
+
+### 1. Clone o repositório
+```bash
+git clone https://github.com/seu-usuario/certifai-front.git
+cd certifai-front
 ```
+
+### 2. Instale as dependências
+```bash
+# Com npm
+npm install
+
+# Com yarn
+yarn install
+```
+
+### 3. Execute o projeto
+```bash
+# Modo desenvolvimento
+npm run dev
+# ou
+yarn run dev
+
+# O projeto estará disponível em http://localhost:5173
+```
+
+## 📱 Responsividade
+
+O projeto é totalmente responsivo e otimizado para:
+- 📱 **Mobile** - 320px+
+- 📱 **Tablet** - 768px+
+- 💻 **Desktop** - 1024px+
+- 🖥️ **Large Desktop** - 1440px+
+
+### Padrões de Código
+- Use TypeScript para todos os novos arquivos
+- Siga o padrão MVC para novos componentes
+- Mantenha os testes atualizados
+- Use nomes descritivos para variáveis e funções
+- Documente funções complexas
