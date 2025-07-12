@@ -1,4 +1,5 @@
 import './styles.css';
+import google from '../../assets/images/google-logo.png';
 import { useRegisterController } from './indexController';
 
 const Register = () => {
@@ -122,7 +123,7 @@ const Register = () => {
                                 className="google-login-button"
                                 disabled={isLoading}>
                                  <img
-                                    src="../../public/google-logo.png" 
+                                    src={google} 
                                     alt="Google logo"
                                     className="w-3 h-3"
                                 />
