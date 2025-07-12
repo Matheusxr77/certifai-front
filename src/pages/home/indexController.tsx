@@ -24,6 +24,7 @@ import type {
 } from '../../interfaces/HomeInterfaces.tsx';
 import type { DashboardCard } from './indexModel';
 import type { ReactElement } from 'react';
+import { useAuth } from '../../contexts/authContext.tsx';
 
 export const useHomeController = (): HomeControllerReturn => {    
     const [isSidebarExpanded, setSidebarExpanded] = useState(true);
@@ -32,6 +33,13 @@ export const useHomeController = (): HomeControllerReturn => {
     const [error, setError] = useState<string | null>(null);
     
     const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
+
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/login');
+        }
+    }, [isAuthenticated, navigate]);
     
     // Função para obter ícones
     const getIcon = (iconName: string): ReactElement => {

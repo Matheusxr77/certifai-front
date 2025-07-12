@@ -1,6 +1,7 @@
 import {
     useState,
-    useEffect
+    useEffect,
+    useRef
 } from 'react';
 import {
     useNavigate,
@@ -23,26 +24,26 @@ export const useConfirmationController = (): ConfirmationControllerReturn => {
     const [isVerified, setIsVerified] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [message, setMessage] = useState(CONFIRMATION_CONSTANTS.LOADING_MESSAGE);
-    const [hasAttemptedVerification, setHasAttemptedVerification] = useState(false);
     const [isVerifying, setIsVerifying] = useState(false);
     const [searchParams] = useSearchParams();
+    const hasInitialized = useRef(false);
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (hasAttemptedVerification) return;
+        if (hasInitialized.current) return;
+        hasInitialized.current = true;
 
         const token = searchParams.get('token');
 
-        if (token) {
-            setHasAttemptedVerification(true);
+        if (token && token.trim()) {
             verifyEmail(token);
         } else {
             setIsLoading(false);
             setIsVerified(false);
             setMessage(CONFIRMATION_CONSTANTS.ERROR_MESSAGE);
         }
-    }, [hasAttemptedVerification]);
+    }, []);
 
     const verifyEmail = async (token?: string) => {
         if (isVerifying) return;
@@ -52,8 +53,6 @@ export const useConfirmationController = (): ConfirmationControllerReturn => {
             setIsLoading(true);
             setError(null);
             await new Promise(resolve => setTimeout(resolve, 1500));
-
-            if (!token) throw new Error('INVALID_TOKEN');
 
             const response = await api.get(`/auth/verify?token=${token}`);
 

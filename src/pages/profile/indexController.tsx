@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../contexts/authContext';
 import api from '../../api';
+import apiWithoutAuthHeader from '../../apiSemHeader';
 import {
     PROFILE_CONSTANTS,
     PROFILE_ERROR_MESSAGES,
@@ -50,24 +51,20 @@ export const useProfileController = (): ProfileControllerHook => {
         return password.length >= 6;
     };
 
-    // Validação de confirmação de senha
     const validatePasswordMatch = (password: string, confirmPassword: string): boolean => {
         return password === confirmPassword;
     };
 
-    // Função para obter a descrição do papel
     const getRoleDescription = (role: string): string => {
         const option = ROLE_OPTIONS.find(opt => opt.value === role);
         return option ? option.description : 'Tipo de perfil não definido';
     };
 
-    // Função para obter o label do papel
     const getRoleLabel = (role: string): string => {
         const option = ROLE_OPTIONS.find(opt => opt.value === role);
         return option ? option.label : role;
     };
 
-    // Função para garantir que o token está configurado nas requisições
     const ensureTokenInHeaders = () => {
         const token = localStorage.getItem('token') || localStorage.getItem('authToken');
         if (token && !api.defaults.headers.common['Authorization']) {
@@ -75,122 +72,59 @@ export const useProfileController = (): ProfileControllerHook => {
         }
     };
 
-    // Carregar dados do perfil via GET aguardando o usuário estar disponível
     useEffect(() => {
-        const loadDataWhenUserAvailable = async () => {
-            // Garantir que o token está configurado
-            ensureTokenInHeaders();
-            
-            // Aguardar um pouco para o contexto de autenticação carregar
-            if (!user || !user.id) {
-                // Se não há usuário ainda, aguardar um pouco mais
-                const timeout = setTimeout(() => {
-                    if (user?.id) {
-                        loadProfileData();
-                    } else {
-                        // Se ainda não há usuário, usar dados do localStorage se disponível
-                        const storedUser = localStorage.getItem('user');
-                        if (storedUser) {
-                            try {
-                                const parsedUser = JSON.parse(storedUser);
-                                if (parsedUser.id) {
-                                    const userProfileData: ProfileData = {
-                                        id: parsedUser.id,
-                                        name: parsedUser.name,
-                                        email: parsedUser.email,
-                                        role: parsedUser.role
-                                    };
-                                    setProfileData(userProfileData);
-                                    setSelectedRole(parsedUser.role);
-                                    setIsLoading(false);
-                                }
-                            } catch (error) {
-                                console.error('Error parsing stored user:', error);
-                                setIsLoading(false);
-                            }
-                        } else {
-                            setIsLoading(false);
-                        }
-                    }
-                }, 1000);
+        ensureTokenInHeaders();
+        loadProfileData();
+    }, []);
 
-                return () => clearTimeout(timeout);
-            } else {
-                loadProfileData();
-            }
-        };
-
-        loadDataWhenUserAvailable();
-    }, [user]);
 
     const loadProfileData = async () => {
-        const currentUser = user || (() => {
-            const storedUser = localStorage.getItem('user');
-            return storedUser ? JSON.parse(storedUser) : null;
-        })();
+    try {
+        setIsLoading(true);
+        setError(null);
 
-        if (!currentUser?.id) {
-            setIsLoading(false);
+        const isOAuthLogin = !localStorage.getItem("token");
+        const client = isOAuthLogin ? apiWithoutAuthHeader : api;
+
+        const response = await client.get<AbstractResponse<UsuarioResponse>>(`/auth/me`);
+        console.log(response);
+        if (response.data.success) {
+            const userData = response.data.data;
+
+            const profileData: ProfileData = {
+                id: userData.id,
+                name: userData.name,
+                email: userData.email,
+                role: userData.role
+            };
+
+            setProfileData(profileData);
+            setSelectedRole(userData.role);
+
+            localStorage.setItem('user', JSON.stringify(userData));
+        } else {
+            throw new Error(response.data.message || 'UNKNOWN_ERROR');
+        }
+    } catch (error: any) {
+        console.error('Load profile error:', error);
+
+        if (error?.response?.status === 401) {
+            toast.error('Sessão expirada. Faça login novamente.');
+            logout();
             return;
         }
 
-        try {
-            setIsLoading(true);
-            setError(null);
-
-            // Garantir que o token está configurado antes da requisição
-            ensureTokenInHeaders();
-
-            // Buscar dados do usuário logado via GET
-            const response = await api.get<AbstractResponse<UsuarioResponse>>(`/usuarios/${currentUser.id}`);
-            
-            if (response.data.success) {
-                // Converter UsuarioResponse para ProfileData
-                const userData = response.data.data;
-                const profileData: ProfileData = {
-                    id: userData.id,
-                    name: userData.name,
-                    email: userData.email,
-                    role: userData.role
-                };
-                setProfileData(profileData);
-                setSelectedRole(userData.role);
-            } else {
-                throw new Error(response.data.message || 'UNKNOWN_ERROR');
-            }
-        } catch (error) {
-            console.error('Load profile error:', error);
-            
-            // Verificar se o erro é de autenticação
-            if (error === 401) {
-                // Token inválido ou expirado - fazer logout
-                toast.error('Sessão expirada. Faça login novamente.');
-                logout();
-                return;
-            }
-            
-            // Se falhar, usar dados do usuário do contexto ou localStorage como fallback
-            if (currentUser && currentUser.id) {
-                const userProfileData: ProfileData = {
-                    id: currentUser.id,
-                    name: currentUser.name,
-                    email: currentUser.email,
-                    role: currentUser.role
-                };
-                setProfileData(userProfileData);
-                setSelectedRole(currentUser.role);
-            }
-            
-            const errorType = getErrorType(error);
-            const errorMessage = getErrorMessage(errorType);
-            setError(errorMessage);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+        const errorType = getErrorType(error);
+        const errorMessage = getErrorMessage(errorType);
+        setError(errorMessage);
+    } finally {
+        setIsLoading(false);
+    }
+};
 
     const handleUpdateProfile = async (event: React.FormEvent) => {
         event.preventDefault();
+        ensureTokenInHeaders();
         
         const currentUser = user || (() => {
             const storedUser = localStorage.getItem('user');
@@ -211,10 +145,6 @@ export const useProfileController = (): ProfileControllerHook => {
             setError(null);
             setSuccess(null);
 
-            // Garantir que o token está configurado antes da requisição
-            ensureTokenInHeaders();
-
-            // Enviar dados completos do usuário conforme backend espera
             const updateData = {
                 id: currentUser.id,
                 name: currentUser.name,
@@ -223,11 +153,13 @@ export const useProfileController = (): ProfileControllerHook => {
                 ativo: true
             };
 
-            // Atualizar perfil via API
-            const response = await api.put<AbstractResponse<UsuarioResponse>>(`/usuarios/${currentUser.id}`, updateData);
+            const isOAuthLogin = !localStorage.getItem("token");
+            const client = isOAuthLogin ? apiWithoutAuthHeader : api;
+
+            const response = await client.put<AbstractResponse<UsuarioResponse>>(`/usuarios/${currentUser.id}`, updateData);
+            console.log('Profile update response:', response);
             
             if (response.data.success) {
-                // Converter resposta para ProfileData
                 const userData = response.data.data;
                 const updatedProfile: ProfileData = {
                     id: userData.id,
@@ -238,7 +170,6 @@ export const useProfileController = (): ProfileControllerHook => {
                 setProfileData(updatedProfile);
                 setSelectedRole(userData.role);
                 
-                // Atualizar dados do usuário no localStorage também
                 const updatedUser = { ...currentUser, role: userData.role };
                 localStorage.setItem('user', JSON.stringify(updatedUser));
                 
@@ -248,7 +179,6 @@ export const useProfileController = (): ProfileControllerHook => {
                 throw new Error(response.data.message || 'UNKNOWN_ERROR');
             }
 
-            // Limpar mensagem de sucesso após delay
             setTimeout(() => {
                 setSuccess(null);
             }, PROFILE_CONSTANTS.REFRESH_DELAY);
@@ -256,7 +186,6 @@ export const useProfileController = (): ProfileControllerHook => {
         } catch (error) {
             console.error('Profile update error:', error);
             
-            // Verificar se o erro é de autenticação
             if (error === 401) {
                 toast.error('Sessão expirada. Faça login novamente.');
                 logout();
@@ -300,7 +229,6 @@ export const useProfileController = (): ProfileControllerHook => {
             setError(null);
             setSuccess(null);
 
-            // Garantir que o token está configurado antes da requisição
             ensureTokenInHeaders();
 
             const passwordData: NovaSenhaRequest = {
@@ -309,14 +237,15 @@ export const useProfileController = (): ProfileControllerHook => {
                 confirmarNovaSenha: confirmPassword
             };
 
-            // Fazer requisição para alterar senha
-            const response = await api.patch<AbstractResponse<void>>(`/usuarios/${currentUser.id}/senha`, passwordData);
+            const isOAuthLogin = !localStorage.getItem("token");
+            const client = isOAuthLogin ? apiWithoutAuthHeader : api;
+
+            const response = await client.patch<AbstractResponse<void>>(`/usuarios/${currentUser.id}/senha`, passwordData);
             
             if (response.data.success) {
                 setSuccess(PROFILE_CONSTANTS.PASSWORD_SUCCESS_MESSAGE);
                 toast.success(PROFILE_CONSTANTS.PASSWORD_SUCCESS_MESSAGE);
                 
-                // Limpar campos de senha
                 setCurrentPassword('');
                 setNewPassword('');
                 setConfirmPassword('');
@@ -325,7 +254,6 @@ export const useProfileController = (): ProfileControllerHook => {
                 throw new Error(response.data.message || 'UNKNOWN_ERROR');
             }
 
-            // Limpar mensagem de sucesso após delay
             setTimeout(() => {
                 setSuccess(null);
             }, PROFILE_CONSTANTS.REFRESH_DELAY);
@@ -333,14 +261,12 @@ export const useProfileController = (): ProfileControllerHook => {
         } catch (error: any) {
             console.error('Password change error:', error);
             
-            // Verificar se o erro é de autenticação
             if (error?.response?.status === 401) {
                 toast.error('Sessão expirada. Faça login novamente.');
                 logout();
                 return;
             }
             
-            // Tratamento específico para senha atual incorreta
             if (error?.response?.status === 400 || error?.response?.data?.message?.includes('senha atual')) {
                 setError(PROFILE_ERROR_MESSAGES.CURRENT_PASSWORD_WRONG);
                 toast.error(PROFILE_ERROR_MESSAGES.CURRENT_PASSWORD_WRONG);
@@ -377,10 +303,8 @@ export const useProfileController = (): ProfileControllerHook => {
             setError(null);
             setSuccess(null);
 
-            // Garantir que o token está configurado antes da requisição
             ensureTokenInHeaders();
 
-            // Fazer requisição para desativar usuário
             const response = await api.patch<AbstractResponse<void>>(`/usuarios/${currentUser.id}/desativar`, {
                 id: currentUser.id,
                 ativo: false
@@ -389,8 +313,11 @@ export const useProfileController = (): ProfileControllerHook => {
             if (response.data.success) {
                 setSuccess(PROFILE_CONSTANTS.DEACTIVATE_SUCCESS_MESSAGE);
                 toast.success(PROFILE_CONSTANTS.DEACTIVATE_SUCCESS_MESSAGE);
+
+                localStorage.removeItem('user');
+                localStorage.removeItem('token');
+                localStorage.removeItem('authToken');
                 
-                // Desconectar usuário após 2 segundos
                 setTimeout(() => {
                     logout();
                 }, 2000);
@@ -401,14 +328,12 @@ export const useProfileController = (): ProfileControllerHook => {
         } catch (error: any) {
             console.error('Deactivate user error:', error);
             
-            // Verificar se o erro é de autenticação
             if (error?.response?.status === 401) {
                 toast.error('Sessão expirada. Faça login novamente.');
                 logout();
                 return;
             }
             
-            // Tratamento específico para erro de desativação
             if (error?.response?.status === 403) {
                 setError(PROFILE_ERROR_MESSAGES.DEACTIVATE_UNAUTHORIZED);
                 toast.error(PROFILE_ERROR_MESSAGES.DEACTIVATE_UNAUTHORIZED);
@@ -443,22 +368,18 @@ export const useProfileController = (): ProfileControllerHook => {
             setError(null);
             setSuccess(null);
 
-            // Garantir que o token está configurado antes da requisição
             ensureTokenInHeaders();
 
-            // Fazer requisição para excluir usuário
             const response = await api.delete<AbstractResponse<void>>(`/usuarios/${currentUser.id}`);
             
             if (response.data.success) {
                 setSuccess(PROFILE_CONSTANTS.DELETE_SUCCESS_MESSAGE);
                 toast.success(PROFILE_CONSTANTS.DELETE_SUCCESS_MESSAGE);
                 
-                // Limpar todos os dados locais
                 localStorage.removeItem('user');
                 localStorage.removeItem('token');
                 localStorage.removeItem('authToken');
                 
-                // Redirecionar para login após 2 segundos
                 setTimeout(() => {
                     logout();
                     window.location.href = '/login';
@@ -470,7 +391,6 @@ export const useProfileController = (): ProfileControllerHook => {
         } catch (error: any) {
             console.error('Delete account error:', error);
             
-            // Verificar se o erro é de autenticação
             if (error?.response?.status === 401) {
                 toast.error('Sessão expirada. Faça login novamente.');
                 logout();

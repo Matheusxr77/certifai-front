@@ -187,117 +187,121 @@ const ProfilePage: React.FC = () => {
                                 )}
                             </div>
 
-                            <div className="password-form-section">
-                                <div className="section-header">
-                                    <h2 className="section-title">{PROFILE_CONSTANTS.PASSWORD_FORM_TITLE}</h2>
-                                    <button 
-                                        type="button" 
-                                        className="toggle-password-form-button"
-                                        onClick={() => setShowPasswordForm(!showPasswordForm)}
-                                        disabled={isChangingPassword}
-                                    >
-                                        <FiLock />
-                                        {showPasswordForm 
-                                            ? PROFILE_CONSTANTS.HIDE_PASSWORD_FORM_TEXT 
-                                            : PROFILE_CONSTANTS.SHOW_PASSWORD_FORM_TEXT
-                                        }
-                                    </button>
-                                </div>
-
-                                {showPasswordForm && (
-                                    <form className="password-form" onSubmit={handlePasswordChange}>
-                                        <div className="input-group">
-                                            <label htmlFor="currentPassword">
-                                                {PROFILE_CONSTANTS.CURRENT_PASSWORD_LABEL}
-                                            </label>
-                                            <div className="input-with-icon">
-                                                <FiLock className="input-icon" />
-                                                <input
-                                                    type="password"
-                                                    id="currentPassword"
-                                                    value={currentPassword}
-                                                    onChange={(e) => setCurrentPassword(e.target.value)}
-                                                    placeholder={PROFILE_CONSTANTS.CURRENT_PASSWORD_PLACEHOLDER}
-                                                    className={error ? 'error' : ''}
-                                                    disabled={isChangingPassword}
-                                                    required
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="input-group">
-                                            <label htmlFor="newPassword">
-                                                {PROFILE_CONSTANTS.NEW_PASSWORD_LABEL}
-                                            </label>
-                                            <div className="input-with-icon">
-                                                <FiLock className="input-icon" />
-                                                <input
-                                                    type="password"
-                                                    id="newPassword"
-                                                    value={newPassword}
-                                                    onChange={(e) => setNewPassword(e.target.value)}
-                                                    placeholder={PROFILE_CONSTANTS.NEW_PASSWORD_PLACEHOLDER}
-                                                    className={error ? 'error' : ''}
-                                                    disabled={isChangingPassword}
-                                                    required
-                                                />
-                                            </div>
-                                            <small className="password-hint">
-                                                {PROFILE_CONSTANTS.PASSWORD_REQUIREMENTS}
-                                            </small>
-                                        </div>
-
-                                        <div className="input-group">
-                                            <label htmlFor="confirmPassword">
-                                                {PROFILE_CONSTANTS.CONFIRM_PASSWORD_LABEL}
-                                            </label>
-                                            <div className="input-with-icon">
-                                                <FiLock className="input-icon" />
-                                                <input
-                                                    type="password"
-                                                    id="confirmPassword"
-                                                    value={confirmPassword}
-                                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                                    placeholder={PROFILE_CONSTANTS.CONFIRM_PASSWORD_PLACEHOLDER}
-                                                    className={error ? 'error' : ''}
-                                                    disabled={isChangingPassword}
-                                                    required
-                                                />
-                                            </div>
-                                        </div>
-
-                                        {error && (
-                                            <div className="error-message">
-                                                <p>{error}</p>
-                                            </div>
-                                        )}
-
-                                        {success && (
-                                            <div className="success-message">
-                                                <FiCheckCircle />
-                                                <p>{success}</p>
-                                            </div>
-                                        )}
-
-                                        <div className="form-actions">
+                            {localStorage.getItem('token') !== null &&
+                                <>
+                                    <div className="password-form-section">
+                                        <div className="section-header">
+                                            <h2 className="section-title">{PROFILE_CONSTANTS.PASSWORD_FORM_TITLE}</h2>
                                             <button 
-                                                type="submit" 
-                                                className="change-password-button"
-                                                disabled={isChangingPassword || !currentPassword.trim() || !newPassword.trim() || !confirmPassword.trim()}
+                                                type="button" 
+                                                className="toggle-password-form-button"
+                                                onClick={() => setShowPasswordForm(!showPasswordForm)}
+                                                disabled={isChangingPassword}
                                             >
-                                                {isChangingPassword ? (
-                                                    <>
-                                                        <FiLoader className="spinning" />
-                                                        {PROFILE_CONSTANTS.CHANGING_PASSWORD_BUTTON_TEXT}
-                                                    </>
-                                                ) : (
-                                                    PROFILE_CONSTANTS.CHANGE_PASSWORD_BUTTON_TEXT
-                                                )}
+                                                <FiLock />
+                                                {showPasswordForm 
+                                                    ? PROFILE_CONSTANTS.HIDE_PASSWORD_FORM_TEXT 
+                                                    : PROFILE_CONSTANTS.SHOW_PASSWORD_FORM_TEXT
+                                                }
                                             </button>
                                         </div>
-                                    </form>
-                                )}
-                            </div>
+
+                                        {showPasswordForm && (
+                                            <form className="password-form" onSubmit={handlePasswordChange}>
+                                                <div className="input-group">
+                                                    <label htmlFor="currentPassword">
+                                                        {PROFILE_CONSTANTS.CURRENT_PASSWORD_LABEL}
+                                                    </label>
+                                                    <div className="input-with-icon">
+                                                        <FiLock className="input-icon" />
+                                                        <input
+                                                            type="password"
+                                                            id="currentPassword"
+                                                            value={currentPassword}
+                                                            onChange={(e) => setCurrentPassword(e.target.value)}
+                                                            placeholder={PROFILE_CONSTANTS.CURRENT_PASSWORD_PLACEHOLDER}
+                                                            className={error ? 'error' : ''}
+                                                            disabled={isChangingPassword}
+                                                            required
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="input-group">
+                                                    <label htmlFor="newPassword">
+                                                        {PROFILE_CONSTANTS.NEW_PASSWORD_LABEL}
+                                                    </label>
+                                                    <div className="input-with-icon">
+                                                        <FiLock className="input-icon" />
+                                                        <input
+                                                            type="password"
+                                                            id="newPassword"
+                                                            value={newPassword}
+                                                            onChange={(e) => setNewPassword(e.target.value)}
+                                                            placeholder={PROFILE_CONSTANTS.NEW_PASSWORD_PLACEHOLDER}
+                                                            className={error ? 'error' : ''}
+                                                            disabled={isChangingPassword}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <small className="password-hint">
+                                                        {PROFILE_CONSTANTS.PASSWORD_REQUIREMENTS}
+                                                    </small>
+                                                </div>
+
+                                                <div className="input-group">
+                                                    <label htmlFor="confirmPassword">
+                                                        {PROFILE_CONSTANTS.CONFIRM_PASSWORD_LABEL}
+                                                    </label>
+                                                    <div className="input-with-icon">
+                                                        <FiLock className="input-icon" />
+                                                        <input
+                                                            type="password"
+                                                            id="confirmPassword"
+                                                            value={confirmPassword}
+                                                            onChange={(e) => setConfirmPassword(e.target.value)}
+                                                            placeholder={PROFILE_CONSTANTS.CONFIRM_PASSWORD_PLACEHOLDER}
+                                                            className={error ? 'error' : ''}
+                                                            disabled={isChangingPassword}
+                                                            required
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {error && (
+                                                    <div className="error-message">
+                                                        <p>{error}</p>
+                                                    </div>
+                                                )}
+
+                                                {success && (
+                                                    <div className="success-message">
+                                                        <FiCheckCircle />
+                                                        <p>{success}</p>
+                                                    </div>
+                                                )}
+
+                                                <div className="form-actions">
+                                                    <button 
+                                                        type="submit" 
+                                                        className="change-password-button"
+                                                        disabled={isChangingPassword || !currentPassword.trim() || !newPassword.trim() || !confirmPassword.trim()}
+                                                    >
+                                                        {isChangingPassword ? (
+                                                            <>
+                                                                <FiLoader className="spinning" />
+                                                                {PROFILE_CONSTANTS.CHANGING_PASSWORD_BUTTON_TEXT}
+                                                            </>
+                                                        ) : (
+                                                            PROFILE_CONSTANTS.CHANGE_PASSWORD_BUTTON_TEXT
+                                                        )}
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        )}
+                                    </div>
+                                </>
+                            }
 
                             <div className="deactivate-user-section">
                                 <div className="section-header">

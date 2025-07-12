@@ -98,12 +98,12 @@ export const useResetPasswordController = (): ResetPasswordControllerHook => {
 
             const resetData: ResetPasswordData = {
                 token: token,
-                newPassword: newPassword.trim(),
-                confirmPassword: confirmPassword.trim()
+                novaSenha: newPassword.trim(),
+                confirmarNovaSenha: confirmPassword.trim()
             };
 
             // Fazer requisição para redefinir senha
-            const response = await api.post<AbstractResponse<ResetPasswordResponse>>(`/auth/reset-password?token=${token}`, resetData);
+            const response = await api.post<AbstractResponse<ResetPasswordResponse>>(`/auth/reset-password`, resetData);
             
             if (response.data.success) {
                 setSuccess(RESET_PASSWORD_CONSTANTS.SUCCESS_MESSAGE);
