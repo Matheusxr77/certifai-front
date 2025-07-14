@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../contexts/authContext';
 import api from '../../api';
@@ -36,15 +37,18 @@ export const useProfileController = (): ProfileControllerHook => {
     // Estados para desativar usuário
     const [isDeactivating, setIsDeactivating] = useState(false);
     const [showDeactivateForm, setShowDeactivateForm] = useState(false);
+    const [showDeactivateModal, setShowDeactivateModal] = useState(false);
     
     // Estados para excluir usuário
     const [isDeleting, setIsDeleting] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     
     // Estados para atualizar perfil
     const [showProfileForm, setShowProfileForm] = useState(false);
 
     const { user, logout } = useAuth();
+    const navigate = useNavigate();
 
     // Validação de senha
     const validatePassword = (password: string): boolean => {
@@ -492,6 +496,32 @@ export const useProfileController = (): ProfileControllerHook => {
         await loadProfileData();
     };
 
+    const handleDeleteModalClose = useCallback(() => {
+        setShowDeleteModal(false);
+    }, []);
+
+    const handleDeleteModalConfirm = useCallback(async () => {
+        try {
+            await logout();
+            navigate('/login', { replace: true });
+        } catch (error) {
+            console.error('Erro após exclusão da conta:', error);
+        }
+    }, [logout, navigate]);
+
+    const handleDeactivateModalClose = useCallback(() => {
+        setShowDeactivateModal(false);
+    }, []);
+
+    const handleDeactivateModalConfirm = useCallback(async () => {
+        try {
+            await logout();
+            navigate('/login', { replace: true });
+        } catch (error) {
+            console.error('Erro após desativação da conta:', error);
+        }
+    }, [logout, navigate]);
+
     return {
         profileData,
         selectedRole,
@@ -525,6 +555,14 @@ export const useProfileController = (): ProfileControllerHook => {
         showProfileForm,
         setShowProfileForm,
         getRoleDescription,
-        getRoleLabel
+        getRoleLabel,
+        showDeleteModal,
+        setShowDeleteModal,
+        handleDeleteModalClose,
+        handleDeleteModalConfirm,
+        showDeactivateModal,
+        setShowDeactivateModal,
+        handleDeactivateModalClose,
+        handleDeactivateModalConfirm
     };
 };
