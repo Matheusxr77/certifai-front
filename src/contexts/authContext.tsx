@@ -4,13 +4,13 @@ import React, {
     useContext,
     useEffect,
 } from 'react';
+import api from '../api.tsx';
+import apiWithoutAuthHeader from '../apiSemHeader.tsx';
 
 import type { UsuarioResponse } from '../interfaces/UsuarioInterfaces.tsx';
 import type { AuthResponse } from '../interfaces/AuthInterfaces.tsx';
 import type { LoginResponse } from '../interfaces/LoginInterfaces.tsx';
 import type { AbstractResponse } from '../interfaces/AbstractInterfaces.tsx';
-import api from '../api.tsx';
-import apiWithoutAuthHeader from '../apiSemHeader.tsx';
 
 const AuthContext = createContext<AuthResponse | null>(null);
 
@@ -21,13 +21,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const login = async (email: string, password: string): Promise<boolean> => {
         try {
             const response = await api.post<AbstractResponse<LoginResponse>>(
-            '/auth/login',
-            { email, password }
+                '/auth/login',
+                { email, password }
             );
 
             const loginData = response.data.data;
             if (loginData.token) {
-            localStorage.setItem('token', loginData.token);
+                localStorage.setItem('token', loginData.token);
             }
             setUser(loginData.usuario);
             return true;
@@ -55,41 +55,38 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     useEffect(() => {
         const verifyAuth = async () => {
-        const token = localStorage.getItem('token');
-        const apiToUse = token ? api : apiWithoutAuthHeader;
+            const token = localStorage.getItem('token');
+            const apiToUse = token ? api : apiWithoutAuthHeader;
 
-        try {
-            const response = await apiToUse.get<AbstractResponse<UsuarioResponse>>('/auth/me');
+            try {
+                const response = await apiToUse.get<AbstractResponse<UsuarioResponse>>('/auth/me');
 
-            if (response.data && response.data.success) {
-                setUser(response.data.data);
+                if (response.data && response.data.success) {
+                    setUser(response.data.data);
 
-                // Se a resposta vem de um login com Google (sem token no localStorage),
-                // opcionalmente, você pode salvar algo no localStorage para manter login:
-                if (!token) {
-                    // Não salvar token por segurança, mas indicar que login foi feito com cookie
-                    localStorage.setItem('loginWithGoogle', 'true');
+                    // Se a resposta vem de um login com Google (sem token no localStorage), opcionalmente, você pode salvar algo no localStorage para manter login:
+                    if (!token) {
+                        // Não salvar token por segurança, mas indicar que login foi feito com cookie
+                        localStorage.setItem('loginWithGoogle', 'true');
+                    }
+                } else {
+                    setUser(null);
                 }
-            } else {
+            } catch (error) {
                 setUser(null);
+            } finally {
+                setIsLoading(false);
             }
-        } catch (error) {
-            setUser(null);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-
+        };
         verifyAuth();
-    }, []); 
+    }, []);
 
     const isAuthenticated = !!user;
 
     if (isLoading) {
         return <div>Carregando aplicação...</div>;
     }
-    
+
     return (
         <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
             {children}

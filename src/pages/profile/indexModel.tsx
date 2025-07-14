@@ -1,18 +1,3 @@
-// Interface para dados do perfil
-export interface ProfileData {
-    id: number;
-    name: string;
-    email: string;
-    role: string;
-}
-
-// Interface para requisição de nova senha
-export interface NovaSenhaRequest {
-    senhaAntiga: string;
-    novaSenha: string;
-    confirmarNovaSenha: string;
-}
-
 // Interface para o controller
 export interface ProfileControllerHook {
     profileData: ProfileData | null;
@@ -40,14 +25,45 @@ export interface ProfileControllerHook {
     handleDeactivateUser: () => Promise<void>;
     showDeactivateForm: boolean;
     setShowDeactivateForm: (show: boolean) => void;
-    showProfileForm: boolean;
-    setShowProfileForm: (show: boolean) => void;
     isDeleting: boolean;
     handleDeleteAccount: () => Promise<void>;
     showDeleteForm: boolean;
     setShowDeleteForm: (show: boolean) => void;
+    showProfileForm: boolean;
+    setShowProfileForm: (show: boolean) => void;
     getRoleDescription: (role: string) => string;
     getRoleLabel: (role: string) => string;
+    showDeleteModal: boolean;
+    setShowDeleteModal: (show: boolean) => void;
+    handleDeleteModalClose: () => void;
+    handleDeleteModalConfirm: (user: User) => Promise<void>;
+    showDeactivateModal: boolean;
+    setShowDeactivateModal: (show: boolean) => void;
+    handleDeactivateModalClose: () => void;
+    handleDeactivateModalConfirm: (user: User) => Promise<void>;
+}
+
+// Interface para dados do perfil
+export interface ProfileData {
+    id: number;
+    name: string;
+    email: string;
+    role: string;
+}
+
+// Interface para requisição de nova senha
+export interface NovaSenhaRequest {
+    senhaAntiga: string;
+    novaSenha: string;
+    confirmarNovaSenha: string;
+}
+
+export interface User {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+    isActive?: boolean;
 }
 
 // Tipo para opções de papel/perfil
@@ -107,7 +123,23 @@ export const PROFILE_CONSTANTS = {
     DEACTIVATE_DESCRIPTION: 'Ao desativar sua conta, seu registro ficará inativo e não receberá notificações, mas será possível recuperar seus dados logando novamente.',
     DEACTIVATE_WARNING: 'Atenção: Esta ação desativará sua conta e você será desconectado imediatamente.',
     DELETE_SUCCESS_MESSAGE: 'Conta excluída com sucesso. Redirecionando para login...',
-    DELETE_BUTTON_TEXT: 'Excluir Conta Permanentemente'
+    DELETE_BUTTON_TEXT: 'Excluir Conta Permanentemente',
+    DELETE_USER_TITLE: 'Excluir Conta',
+    SHOW_DELETE_FORM_TEXT: 'Excluir Conta',
+    HIDE_DELETE_FORM_TEXT: 'Cancelar',
+    DELETE_DESCRIPTION: 'Ao excluir sua conta, todos os seus dados serão removidos permanentemente do sistema. Esta ação não pode ser desfeita.',
+    DELETE_WARNING: 'Atenção: Esta ação é irreversível e todos os seus dados serão perdidos.',
+    DELETE_CONFIRMATION_BUTTON_TEXT: 'Excluir Conta Permanentemente',
+    DELETING_BUTTON_TEXT: 'Excluindo...',
+    PROFILE_SECTION_TITLE: 'Atualizar Perfil',
+    INFO_SECTION_TITLE: 'Informações Pessoais',
+    ROLE_LABEL: 'Como prefere usar o CertifAI?',
+    ROLE_PLACEHOLDER: 'Selecione seu perfil',
+    NAME_LABEL: 'Nome Completo',
+    EMAIL_LABEL: 'Email',
+    CURRENT_ROLE_LABEL: 'Tipo de Perfil Atual',
+    ERROR_LOADING_PROFILE: 'Erro ao carregar dados do perfil',
+    TRY_AGAIN_BUTTON: 'Tentar Novamente'
 };
 
 // Mensagens de erro específicas

@@ -17,6 +17,8 @@ import {
     ROLE_OPTIONS
 } from './indexModel';
 import Sidebar from '../../components/sidebar';
+import DeleteAccountModal from './components/DeleteAccountModal/index';
+import DeactivateAccountModal from './components/DeactivateAccountModal/index';
 
 const ProfilePage: React.FC = () => {
     const [isSidebarExpanded, setSidebarExpanded] = useState(true);
@@ -42,15 +44,21 @@ const ProfilePage: React.FC = () => {
         showPasswordForm,
         setShowPasswordForm,
         isDeactivating,
-        handleDeactivateUser,
         showDeactivateForm,
         setShowDeactivateForm,
         showProfileForm,
         setShowProfileForm,
         isDeleting,
-        handleDeleteAccount,
         showDeleteForm,
         setShowDeleteForm,
+        showDeleteModal,
+        setShowDeleteModal,
+        handleDeleteModalClose,
+        handleDeleteModalConfirm,
+        showDeactivateModal,
+        setShowDeactivateModal,
+        handleDeactivateModalClose,
+        handleDeactivateModalConfirm,
         getRoleDescription,
         getRoleLabel
     } = useProfileController();
@@ -79,10 +87,10 @@ const ProfilePage: React.FC = () => {
                 />
                 <main className="main-content">
                     <div className="profile-error">
-                        <p>Erro ao carregar dados do perfil</p>
+                        <p>{PROFILE_CONSTANTS.ERROR_LOADING_PROFILE}</p>
                         <button onClick={refreshProfile} className="refresh-button">
                             <FiRefreshCw />
-                            Tentar Novamente
+                            {PROFILE_CONSTANTS.TRY_AGAIN_BUTTON}
                         </button>
                     </div>
                 </main>
@@ -113,7 +121,7 @@ const ProfilePage: React.FC = () => {
                         <div className="profile-left-section">
                             <div className="profile-form-section">
                                 <div className="section-header">
-                                    <h2 className="section-title">Atualizar Perfil</h2>
+                                    <h2 className="section-title">{PROFILE_CONSTANTS.PROFILE_SECTION_TITLE}</h2>
                                     <button 
                                         type="button" 
                                         className="toggle-profile-form-button"
@@ -131,7 +139,7 @@ const ProfilePage: React.FC = () => {
                                 {showProfileForm && (
                                     <form className="profile-form" onSubmit={handleUpdateProfile}>
                                         <div className="input-group">
-                                            <label htmlFor="role">Como prefere usar o CertifAI?</label>
+                                            <label htmlFor="role">{PROFILE_CONSTANTS.ROLE_LABEL}</label>
                                             <select
                                                 id="role"
                                                 name="role"
@@ -140,7 +148,7 @@ const ProfilePage: React.FC = () => {
                                                 className={error ? 'error' : ''}
                                                 disabled={isSaving}
                                             >
-                                                <option value="">Selecione seu perfil</option>
+                                                <option value="">{PROFILE_CONSTANTS.ROLE_PLACEHOLDER}</option>
                                                 {ROLE_OPTIONS.map((option) => (
                                                     <option key={option.value} value={option.value}>
                                                         {option.label}
@@ -348,7 +356,7 @@ const ProfilePage: React.FC = () => {
                                             <button 
                                                 type="button" 
                                                 className="deactivate-button"
-                                                onClick={handleDeactivateUser}
+                                                onClick={() => setShowDeactivateModal(true)}
                                                 disabled={isDeactivating}
                                             >
                                                 {isDeactivating ? (
@@ -370,7 +378,7 @@ const ProfilePage: React.FC = () => {
 
                             <div className="delete-user-section">
                                 <div className="section-header">
-                                    <h2 className="section-title">Excluir Conta</h2>
+                                    <h2 className="section-title">{PROFILE_CONSTANTS.DELETE_USER_TITLE}</h2>
                                     <button 
                                         type="button" 
                                         className="toggle-delete-form-button"
@@ -379,8 +387,8 @@ const ProfilePage: React.FC = () => {
                                     >
                                         <Trash2 size={20} />
                                         {showDeleteForm 
-                                            ? 'Cancelar' 
-                                            : 'Excluir Conta'
+                                            ? PROFILE_CONSTANTS.HIDE_DELETE_FORM_TEXT
+                                            : PROFILE_CONSTANTS.SHOW_DELETE_FORM_TEXT
                                         }
                                     </button>
                                 </div>
@@ -388,12 +396,12 @@ const ProfilePage: React.FC = () => {
                                 {showDeleteForm && (
                                     <div className="delete-form">
                                         <p className="delete-description">
-                                            Ao excluir sua conta, seu registro será removido permanentemente e não receberá mais notificações, mas não será possível recuperar seus dados.
+                                            {PROFILE_CONSTANTS.DELETE_DESCRIPTION}
                                         </p>
 
                                         <div className="delete-warning">
                                             <FiAlertTriangle />
-                                            <span>Atenção: Esta ação excluirá sua conta permanentemente. Você será desconectado imediatamente.</span>
+                                            <span>{PROFILE_CONSTANTS.DELETE_WARNING}</span>
                                         </div>
 
                                         {error && (
@@ -413,18 +421,18 @@ const ProfilePage: React.FC = () => {
                                             <button 
                                                 type="button" 
                                                 className="delete-button"
-                                                onClick={handleDeleteAccount}
+                                                onClick={() => setShowDeleteModal(true)}
                                                 disabled={isDeleting}
                                             >
                                                 {isDeleting ? (
                                                     <>
                                                         <FiLoader className="spinning" />
-                                                        Excluindo...
+                                                        {PROFILE_CONSTANTS.DELETING_BUTTON_TEXT}
                                                     </>
                                                 ) : (
                                                     <>
                                                         <Trash2 size={16} />
-                                                        Excluir Conta Permanentemente
+                                                        {PROFILE_CONSTANTS.DELETE_CONFIRMATION_BUTTON_TEXT}
                                                     </>
                                                 )}
                                             </button>
@@ -436,7 +444,7 @@ const ProfilePage: React.FC = () => {
 
                         <div className="profile-right-section">
                             <div className="profile-info-section">
-                                <h2 className="section-title">Informações Pessoais</h2>
+                                <h2 className="section-title">{PROFILE_CONSTANTS.INFO_SECTION_TITLE}</h2>
                                 
                                 <div className="profile-info-grid">
                                     <div className="info-item">
@@ -444,7 +452,7 @@ const ProfilePage: React.FC = () => {
                                             <FiUser />
                                         </div>
                                         <div className="info-content">
-                                            <label>Nome Completo</label>
+                                            <label>{PROFILE_CONSTANTS.NAME_LABEL}</label>
                                             <p>{profileData.name}</p>
                                         </div>
                                     </div>
@@ -454,7 +462,7 @@ const ProfilePage: React.FC = () => {
                                             <FiMail />
                                         </div>
                                         <div className="info-content">
-                                            <label>Email</label>
+                                            <label>{PROFILE_CONSTANTS.EMAIL_LABEL}</label>
                                             <p>{profileData.email}</p>
                                         </div>
                                     </div>
@@ -464,7 +472,7 @@ const ProfilePage: React.FC = () => {
                                             <FiUser />
                                         </div>
                                         <div className="info-content">
-                                            <label>Tipo de Perfil Atual</label>
+                                            <label>{PROFILE_CONSTANTS.CURRENT_ROLE_LABEL}</label>
                                             <p className="current-role">
                                                 {getRoleLabel(profileData.role)}
                                             </p>
@@ -478,6 +486,22 @@ const ProfilePage: React.FC = () => {
                         </div>
                     </div>
                 </div>
+
+                {showDeactivateModal && profileData && (
+                    <DeactivateAccountModal
+                        user={{ ...profileData, id: String(profileData.id) }}
+                        onClose={handleDeactivateModalClose}
+                        onDeactivate={handleDeactivateModalConfirm}
+                    />
+                )}
+
+                {showDeleteModal && profileData && (
+                    <DeleteAccountModal
+                        user={{ ...profileData, id: String(profileData.id) }}
+                        onClose={handleDeleteModalClose}
+                        onDelete={handleDeleteModalConfirm}
+                    />
+                )}
             </main>
         </div>
     );
