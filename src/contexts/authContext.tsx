@@ -60,7 +60,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 '/auth/verify',         
                 '/login',              
                 '/register',           
-                '/esqueci-senha',       
+                '/esqueci-senha',   
+                '/auth/validate-reset-token',    
             ];
 
             const token = localStorage.getItem('token');
