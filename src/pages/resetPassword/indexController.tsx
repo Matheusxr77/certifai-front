@@ -63,9 +63,7 @@ export const useResetPasswordController = (): ResetPasswordControllerHook => {
             setError(null);
 
             // Verificar se o token é válido - usar POST em vez de GET
-            const response = await api.post<AbstractResponse<any>>(`/auth/validate-reset-token`, {
-                token: tokenValue
-            });
+            const response = await api.post<AbstractResponse<any>>(`/auth/validate-reset-token/${tokenValue}`);
             
             if (response.data.success) {
                 setIsTokenValid(true);
