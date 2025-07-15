@@ -1,0 +1,12 @@
+{
+    "rewrites": [
+    {
+      "source": "/:path((?!api/).*)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/certifai/:path((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
