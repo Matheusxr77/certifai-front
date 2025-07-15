@@ -62,8 +62,10 @@ export const useResetPasswordController = (): ResetPasswordControllerHook => {
             setIsLoading(true);
             setError(null);
 
-            // Verificar se o token é válido
-            const response = await api.get<AbstractResponse<any>>(`/auth/validate-reset-token?token=${encodeURIComponent(tokenValue)}`);
+            // Verificar se o token é válido - usar POST em vez de GET
+            const response = await api.post<AbstractResponse<any>>(`/auth/validate-reset-token`, {
+                token: tokenValue
+            });
             
             if (response.data.success) {
                 setIsTokenValid(true);
@@ -74,7 +76,7 @@ export const useResetPasswordController = (): ResetPasswordControllerHook => {
         } catch (error: any) {
             setIsTokenValid(false);
             
-            if (error?.response?.status === 404 || error?.response?.status === 400) {
+            if (error?.response?.status === 404 || error?.response?.status === 400 || error?.response?.status === 401) {
                 setError(RESET_PASSWORD_CONSTANTS.TOKEN_INVALID_MESSAGE);
             } else {
                 setError(RESET_PASSWORD_ERROR_MESSAGES.NETWORK_ERROR);
@@ -90,8 +92,6 @@ export const useResetPasswordController = (): ResetPasswordControllerHook => {
         if (!validateForm()) {
             return;
         }
-
-        navigate('/reset-password');
 
         try {
             setIsLoading(true);
@@ -146,7 +146,7 @@ export const useResetPasswordController = (): ResetPasswordControllerHook => {
     };
 
     const handleRequestError = (error: any) => {
-        if (error?.response?.status === 400) {
+        if (error?.response?.status === 400 || error?.response?.status === 401) {
             setError(RESET_PASSWORD_CONSTANTS.TOKEN_EXPIRED_MESSAGE);
             toast.error(RESET_PASSWORD_CONSTANTS.TOKEN_EXPIRED_MESSAGE);
             setIsTokenValid(false);
@@ -196,7 +196,7 @@ export const useResetPasswordController = (): ResetPasswordControllerHook => {
     const getErrorType = (error: any): ResetPasswordErrorType => {
         if (error?.code === 'ERR_NETWORK' || error?.message === 'Network Error') {
             return 'NETWORK_ERROR';
-        } else if (error?.response?.status === 400) {
+        } else if (error?.response?.status === 400 || error?.response?.status === 401) {
             return 'TOKEN_INVALID';
         } else if (error?.response?.status === 404) {
             return 'USER_NOT_FOUND';
