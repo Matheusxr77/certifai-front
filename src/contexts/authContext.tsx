@@ -55,31 +55,45 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     useEffect(() => {
         const verifyAuth = async () => {
+            const publicRoutesWithoutAuthCheck = [
+                '/auth/reset-password', 
+                '/auth/verify',         
+                '/login',              
+                '/register',           
+                '/esqueci-senha',       
+            ];
+
             const token = localStorage.getItem('token');
-            const apiToUse = token ? api : apiWithoutAuthHeader;
+            if (publicRoutesWithoutAuthCheck.includes(location.pathname) || !token) {
+                setIsLoading(false); 
+                setUser(null); 
+                return;
+            }
+            const apiToUse = token ? api : apiWithoutAuthHeader; 
 
             try {
                 const response = await apiToUse.get<AbstractResponse<UsuarioResponse>>('/auth/me');
 
                 if (response.data && response.data.success) {
                     setUser(response.data.data);
-
-                    // Se a resposta vem de um login com Google (sem token no localStorage), opcionalmente, você pode salvar algo no localStorage para manter login:
                     if (!token) {
-                        // Não salvar token por segurança, mas indicar que login foi feito com cookie
                         localStorage.setItem('loginWithGoogle', 'true');
                     }
                 } else {
                     setUser(null);
                 }
             } catch (error) {
+                // Se a chamada a /auth/me falhar (ex: 401 Unauthorized), significa que o token é inválido/expirado.
+                // Limpamos o token e o usuário.
+                console.error("Erro ao verificar autenticação ou token inválido:", error);
+                localStorage.removeItem('token'); 
                 setUser(null);
             } finally {
                 setIsLoading(false);
             }
         };
         verifyAuth();
-    }, []);
+    }, [location.pathname]); 
 
     const isAuthenticated = !!user;
 
