@@ -91,6 +91,8 @@ export const useResetPasswordController = (): ResetPasswordControllerHook => {
             return;
         }
 
+        navigate('/reset-password');
+
         try {
             setIsLoading(true);
             setError(null);

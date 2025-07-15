@@ -48,6 +48,7 @@ export const useConfirmationController = (): ConfirmationControllerReturn => {
     const verifyEmail = async (token?: string) => {
         if (isVerifying) return;
         setIsVerifying(true);
+        navigate('/confirmation');
 
         try {
             setIsLoading(true);
