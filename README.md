@@ -111,6 +111,10 @@ yarn run dev
 # O projeto estará disponível em http://localhost:5173
 ```
 
+## 🌐 Deploy
+
+A aplicação está configurada para deploy no Vercel: (certifai-front-ruby.vercel.app)
+
 ## 📱 Responsividade
 
 O projeto é totalmente responsivo e otimizado para:
