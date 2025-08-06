@@ -60,6 +60,13 @@ export const dashboardCardsConfig: DashboardCard[] = [
         requiredRole: 'ADMIN'
     },
     {
+        id: 'certificacoes',
+        title: 'Certificações',
+        description: 'Acesse suas certificações e conquistas.',
+        icon: 'FiAward',
+        path: '/certifications'
+    },
+    {
         id: 'profile',
         title: 'Perfil',
         description: 'Gerencie suas informações e preferências de conta.',

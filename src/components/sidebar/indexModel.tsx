@@ -8,7 +8,8 @@ import {
     FiEdit3,
     FiBarChart,
     FiCheckSquare,
-    FiUser
+    FiUser,
+    FiAward
 } from 'react-icons/fi';
 import { 
     FaBoxOpen, 
@@ -53,6 +54,7 @@ export interface SidebarIcons {
     barChart: ReactElement;
     checkSquare: ReactElement;
     user: ReactElement;
+    award: ReactElement;
 }
 
 // Configuração dos ícones do sidebar
@@ -74,7 +76,8 @@ export const sidebarIcons: SidebarIcons = {
     edit: <FiEdit3 />,
     barChart: <FiBarChart />,
     checkSquare: <FiCheckSquare />,
-    user: <FiUser />
+    user: <FiUser />,
+    award: <FiAward />
 };
 
 // Configuração dos itens de navegação
@@ -133,6 +136,13 @@ export const navigationItems: NavigationItem[] = [
         icon: sidebarIcons.users,
         tooltipId: 'nav-tooltip',
         requiredRole: 'ADMIN'
+    },
+    {
+        id: 'awards',
+        label: 'Certificações',
+        path: '/certifications',
+        icon: sidebarIcons.award,
+        tooltipId: 'nav-tooltip'
     },
     {
         id: 'profile',

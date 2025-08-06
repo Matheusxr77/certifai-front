@@ -13,6 +13,7 @@ import ResetPassword from '../pages/resetPassword/index.tsx';
 import Profile from '../pages/profile/index.tsx';
 import UnderConstruction from '../components/UnderConstruction/index.tsx';
 import Management from '../pages/management/index.tsx';
+import Certifications from '../pages/certifications/index.tsx';
 
 function AppRoutes() {
     return (
@@ -27,6 +28,7 @@ function AppRoutes() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/under-construction" element={<UnderConstruction />} />
             <Route path="/management" element={<Management />} />
+            <Route path="/certifications" element={<Certifications />} />
         </Routes>
     );
 }
