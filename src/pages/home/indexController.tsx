@@ -11,7 +11,8 @@ import {
     FiEdit3,
     FiBarChart,
     FiCheckSquare,
-    FiUser
+    FiUser,
+    FiAward
 } from 'react-icons/fi';
 import { FaUsers } from 'react-icons/fa';
 import { 
@@ -62,7 +63,8 @@ export const useHomeController = () => {
             'FiBarChart': <FiBarChart className="card-icon" />,
             'FiCheckSquare': <FiCheckSquare className="card-icon" />,
             'FiUser': <FiUser className="card-icon" />,
-            'FaUsers': <FaUsers className="card-icon" />
+            'FaUsers': <FaUsers className="card-icon" />,
+            'FiAward': <FiAward className="card-icon" />
         };
         return iconMap[iconName] || <FiCalendar className="card-icon" />;
     };
