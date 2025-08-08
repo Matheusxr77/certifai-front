@@ -106,7 +106,13 @@ const Management: React.FC = () => {
                             <div className="table-header">
                                 <h3>Lista de Usuários</h3>
                                 <span className="results-count">
-                                    {filteredUsers.length} usuário(s) encontrado(s)
+                                    {filteredUsers.length === 0 ? (
+                                        <span>Nenhum usuário encontrado</span>
+                                    ) : filteredUsers.length === 1 ? (
+                                        <span>1 usuário encontrado</span>
+                                    ) : (
+                                        <span>{filteredUsers.length} usuários encontrados</span>
+                                    )}
                                 </span>
                             </div>
 
