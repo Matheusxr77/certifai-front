@@ -229,6 +229,7 @@
 .sidebar.collapsed .sidebar-nav a {
     justify-content: center;
     padding: 1rem;
+    gap: 0rem;
 }
 
 /* Footer do sidebar */
@@ -275,6 +276,7 @@
 .sidebar.collapsed .logout-button {
     justify-content: center;
     padding: 1rem;
+    gap: 0rem;
 }
 
 /* Responsividade */
