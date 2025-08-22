@@ -63,12 +63,12 @@ const DeleteCertificationModal: React.FC<DeleteCertificationModalProps> = ({
 
                     <div className="certification-info">
                         <div className="info-item">
-                            <span className="info-label">{DELETE_CERTIFICATION_MODAL_CONSTANTS.INFO_LABELS.NAME}:</span>
+                            <span className="info-label">{DELETE_CERTIFICATION_MODAL_CONSTANTS.INFO_LABELS.NAME}</span>
                             <span className="info-value">{certification.nome}</span>
                         </div>
                         {certification.descricao && (
                             <div className="info-item">
-                                <span className="info-label">{DELETE_CERTIFICATION_MODAL_CONSTANTS.INFO_LABELS.DESCRIPTION}:</span>
+                                <span className="info-label">{DELETE_CERTIFICATION_MODAL_CONSTANTS.INFO_LABELS.DESCRIPTION}</span>
                                 <span className="info-value">{certification.descricao}</span>
                             </div>
                         )}
