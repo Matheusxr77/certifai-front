@@ -12,19 +12,24 @@ export interface DashboardCard {
 // Configuração dos cards do dashboard
 export const dashboardCardsConfig: DashboardCard[] = [
     {
+        id: 'certificacoes',
+        title: 'Certificações',
+        description: 'Acesse suas certificações e conquistas.',
+        icon: 'FiAward',
+        path: '/certifications'
+    },
+    {
         id: 'banco-questoes',
         title: 'Banco de Questões',
         description: 'Acesse milhares de questões organizadas por disciplina e nível.',
         icon: 'FiBook',
-        // path: '/banco-questoes'
-        path: '/under-construction'
+        path: '/questions'
     },
     {
         id: 'simulacao-provas',
-        title: 'Simulação de Provas',
-        description: 'Pratique com simulados baseados em provas reais.',
+        title: 'Provas',
+        description: 'Gerencie e pratique com simulados baseados em provas reais.',
         icon: 'FiEdit3',
-        // path: '/simulacao-provas'
         path: '/under-construction'
     },
     {
@@ -58,13 +63,6 @@ export const dashboardCardsConfig: DashboardCard[] = [
         icon: 'FaUsers',
         path: '/management',
         requiredRole: 'ADMIN'
-    },
-    {
-        id: 'certificacoes',
-        title: 'Certificações',
-        description: 'Acesse suas certificações e conquistas.',
-        icon: 'FiAward',
-        path: '/certifications'
     },
     {
         id: 'profile',

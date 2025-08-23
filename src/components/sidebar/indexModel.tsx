@@ -90,16 +90,22 @@ export const navigationItems: NavigationItem[] = [
         tooltipId: 'nav-tooltip'
     },
     {
+        id: 'awards',
+        label: 'Certificações',
+        path: '/certifications',
+        icon: sidebarIcons.award,
+        tooltipId: 'nav-tooltip'
+    },
+    {
         id: 'banco-questoes',
         label: 'Banco de Questões',
-        // path: '/banco-questoes',
-        path: '/under-construction',
+        path: '/questions',
         icon: sidebarIcons.book,
         tooltipId: 'nav-tooltip'
     },
     {
         id: 'simulacao-provas',
-        label: 'Simulação de Provas',
+        label: 'Provas',
         // path: '/simulacao-provas',
         path: '/under-construction',
         icon: sidebarIcons.edit,
@@ -136,13 +142,6 @@ export const navigationItems: NavigationItem[] = [
         icon: sidebarIcons.users,
         tooltipId: 'nav-tooltip',
         requiredRole: 'ADMIN'
-    },
-    {
-        id: 'awards',
-        label: 'Certificações',
-        path: '/certifications',
-        icon: sidebarIcons.award,
-        tooltipId: 'nav-tooltip'
     },
     {
         id: 'profile',
