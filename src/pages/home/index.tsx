@@ -1,13 +1,11 @@
 import Sidebar from '../../components/sidebar';
 import './styles.css';
-import { FiRefreshCw } from 'react-icons/fi';
 import { Tooltip } from 'react-tooltip';
 import { useHomeController } from './indexController';
 
 const Home = () => {
     const { 
-        isSidebarExpanded, 
-        isLoading, 
+        isSidebarExpanded,
         error,
         toggleSidebar, 
         navigateToCard,
@@ -27,20 +25,6 @@ const Home = () => {
                 <header className="main-content-header">
                     <div className="header-left">
                         <h1>Dashboard</h1>
-                    </div>
-                    <div className="header-right">
-                        <button 
-                            className="refresh-button" 
-                            onClick={refreshDashboard}
-                            disabled={isLoading}
-                            data-tooltip-id="refresh-tooltip"
-                            data-tooltip-content={isLoading ? 'Atualizando...' : 'Atualizar Dashboard'}
-                            data-tooltip-place="bottom"
-                        >
-                            <Tooltip id="refresh-tooltip" />
-                            <FiRefreshCw className={isLoading ? 'spinning' : ''} />
-                            {isLoading ? 'Atualizando...' : 'Atualizar'}
-                        </button>
                     </div>
                 </header>
 
