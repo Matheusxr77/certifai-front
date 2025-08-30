@@ -1,0 +1,77 @@
+:root {
+    --primary-blue: #3b82f6;
+    --primary-blue-dark: #2563eb;
+    --primary-blue-light: #60a5fa;
+    --primary-green: #10b981;
+    --primary-green-dark: #059669;
+    --primary-green-light: #34d399;
+    --background-dark: #0f172a;
+    --background-card: #1e293b;
+    --form-background: #334155;
+    --text-light: #f8fafc;
+    --text-secondary: #94a3b8;
+    --input-background: #475569;
+    --input-border: #64748b;
+    --error-color: #ef4444;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --shadow-xl: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
+}
+
+.headerContainer {
+    position: relative;
+    padding: 24px;
+    border-radius: 16px 16px 0 0; 
+    background: linear-gradient(135deg, var(--form-background) 0%, var(--background-card) 100%);
+    color: #ffffff;
+    overflow: hidden; 
+  }
+  
+  .headerContainer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px; 
+    background: var(--accent-gradient); 
+    border-radius: 16px 16px 0 0; 
+  }
+
+  
+  .title {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  .filters {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .input,
+  .select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    background-color: #2c3e50;
+    color: #fff;
+    min-width: 200px;
+  }
+  
+  .button {
+    background-color: #00aaff;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .button:hover {
+    background-color: #0088cc;
+  }

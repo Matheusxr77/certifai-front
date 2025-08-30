@@ -54,7 +54,7 @@ export const dashboardCardsConfig: DashboardCard[] = [
         description: 'Planeje e acompanhe sua rotina de estudos.',
         icon: 'FiCalendar',
         // path: '/calendario-estudos'
-        path: '/under-construction'
+        path: '/calendar'
     },
     {
         id: 'gerenciamento-usuarios',

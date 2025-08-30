@@ -15,6 +15,8 @@ import UnderConstruction from '../components/UnderConstruction/index.tsx';
 import Management from '../pages/management/index.tsx';
 import Certifications from '../pages/certifications/index.tsx';
 import Questions from '../pages/questions/index.tsx';
+import Calendar from '../pages/calendar/index.tsx';
+
 
 function AppRoutes() {
     return (
@@ -31,6 +33,8 @@ function AppRoutes() {
             <Route path="/management" element={<Management />} />
             <Route path="/certifications" element={<Certifications />} />
             <Route path="/questions" element={<Questions />} />
+            <Route path="/calendar" element={<Calendar />} />
+
         </Routes>
     );
 }

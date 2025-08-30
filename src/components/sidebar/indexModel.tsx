@@ -131,7 +131,7 @@ export const navigationItems: NavigationItem[] = [
         id: 'calendario-estudos',
         label: 'Calendário de Estudos',
         // path: '/calendario-estudos',
-        path: '/under-construction',
+        path: '/calendar',
         icon: sidebarIcons.calendar,
         tooltipId: 'nav-tooltip'
     },

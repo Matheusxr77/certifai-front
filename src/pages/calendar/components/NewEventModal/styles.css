@@ -1,0 +1,262 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+/* Container principal do modal (substituindo .modal-container) */
+.modal {
+    background: var(--form-background);
+    background-image: linear-gradient(135deg, var(--form-background) 0%, var(--background-card) 100%);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-xl);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Linha de destaque no topo do modal */
+.modal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--accent-gradient);
+}
+
+/* Título do modal (substituindo .modal-header e .modal-title) */
+.modal h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin: 0;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Formulário dentro do modal */
+.modal form {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+/* Estilo para cada <label> que funciona como um .form-group */
+.modal form label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Faz a label que contém o textarea ocupar a largura total */
+.modal form label:has(textarea) {
+    grid-column: 1 / -1;
+}
+
+/* Estilos para todos os inputs, selects e textareas */
+.modal form input,
+.modal form select,
+.modal form textarea {
+    background: var(--input-background);
+    border: 2px solid var(--input-border);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    color: var(--text-light);
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    /* Reseta o estilo herdado da label */
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.modal form input:focus,
+.modal form select:focus,
+.modal form textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    transform: translateY(-2px);
+}
+
+.modal form input:hover,
+.modal form select:hover,
+.modal form textarea:hover {
+    border-color: var(--primary-blue-light);
+}
+
+.modal form input::placeholder,
+.modal form textarea::placeholder {
+    color: var(--text-secondary);
+}
+
+/* Estilo específico para o <select> */
+.modal form select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 1rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5rem 1.5rem;
+    padding-right: 3rem;
+    appearance: none;
+    cursor: pointer;
+}
+
+.modal form select:focus {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%233b82f6' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}
+
+.modal form select option {
+    background: var(--form-background);
+    color: var(--text-light);
+}
+
+.modal form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Container das ações do modal */
+.modal-actions {
+    grid-column: 1 / -1; /* Faz ocupar a largura toda no grid */
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    padding-top: 1.5rem;
+    margin-top: 1rem; /* Adiciona um espaço extra */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Botão de Salvar (primeiro botão dentro de .modal-actions) */
+.modal-actions button[type="submit"] {
+    background: var(--accent-gradient);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    min-width: 120px;
+    text-align: center;
+}
+
+.modal-actions button[type="submit"]:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+/* Botão de Cancelar (segundo botão) */
+.modal-actions button[type="button"] {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 2px solid var(--input-border);
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.modal-actions button[type="button"]:hover:not(:disabled) {
+    border-color: var(--text-secondary);
+    color: var(--text-light);
+}
+
+/* Estados desabilitados para os botões */
+.modal-actions button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* ==========================================================================
+   Responsividade
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .modal {
+        max-width: 95vw;
+        margin: 1rem;
+    }
+    
+    .modal h2 {
+        padding: 1.25rem 1.5rem;
+    }
+    
+    .modal form {
+        padding: 1.5rem;
+        grid-template-columns: 1fr; /* Coluna única em telas menores */
+        gap: 1rem;
+    }
+
+    /* Garante que o textarea ainda ocupe a largura total (já será por padrão) */
+    .modal form label:has(textarea) {
+        grid-column: auto;
+    }
+    
+    .modal-actions {
+        flex-direction: column-reverse; /* Empilha os botões */
+    }
+    
+    .modal-actions button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-overlay {
+        padding: 0.5rem;
+    }
+    
+    .modal {
+        border-radius: 16px;
+    }
+    
+    .modal h2 {
+        padding: 1rem 1.25rem;
+        font-size: 1.25rem;
+    }
+    
+    .modal form {
+        padding: 1.25rem;
+    }
+    
+    .modal form input,
+    .modal form select,
+    .modal form textarea {
+        padding: 0.875rem 1.25rem;
+    }
+}
