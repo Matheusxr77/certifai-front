@@ -1,45 +1,72 @@
-import { useState } from "react";
-import type { Activity } from "../../indexModel";
+import { useMemo } from "react";
+import type { Event } from "../../indexModel";
 
-export const useCalendarGridController = (activities: Activity[]) => {
-  const daysOfWeek = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"];
+export const useCalendarGridController = (
+  events: Event[],
+  currentMonth: number,
+  currentYear: number,
+  onMonthChange: (month: number, year: number) => void
+) => {
+  const today = useMemo(() => new Date(), []);
+  const daysOfWeek = useMemo(
+    () => ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+    []
+  );
 
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const daysInMonth = useMemo(
+    () => new Date(currentYear, currentMonth + 1, 0).getDate(),
+    [currentMonth, currentYear]
+  );
 
-  const getActivitiesByDay = (day: number): Activity[] => {
-    return activities.filter((activity) => {
-      if (!activity.inicio) return false;
+  const firstDayIndex = useMemo(
+    () => new Date(currentYear, currentMonth, 1).getDay(),
+    [currentMonth, currentYear]
+  );
 
-      const rawDate =
-        typeof activity.inicio === "string"
-          ? activity.inicio
-          : String(activity.inicio);
+  const calendarDays = useMemo(() => {
+    return Array.from(
+      { length: firstDayIndex + daysInMonth },
+      (_, i) => (i < firstDayIndex ? null : i - firstDayIndex + 1)
+    );
+  }, [firstDayIndex, daysInMonth]);
 
-      const normalizedDate = rawDate.includes("T")
-        ? rawDate
-        : rawDate + "T00:00:00";
-
-      const activityDate = new Date(normalizedDate);
-
+  const getEventsByDay = (day: number) => {
+    return events.filter((event) => {
+      const eventDate = new Date(event.inicio);
       return (
-        activityDate.getDate() === day &&
-        activityDate.getMonth() === currentMonth &&
-        activityDate.getFullYear() === currentYear
+        eventDate.getDate() === day &&
+        eventDate.getMonth() === currentMonth &&
+        eventDate.getFullYear() === currentYear
       );
     });
   };
 
-  const goToMonth = (month: number, year: number) => {
-    setCurrentMonth(month);
-    setCurrentYear(year);
+  const handlePrevMonth = () => {
+    let month = currentMonth - 1;
+    let year = currentYear;
+    if (month < 0) {
+      month = 11;
+      year -= 1;
+    }
+    onMonthChange(month, year);
+  };
+
+  const handleNextMonth = () => {
+    let month = currentMonth + 1;
+    let year = currentYear;
+    if (month > 11) {
+      month = 0;
+      year += 1;
+    }
+    onMonthChange(month, year);
   };
 
   return {
+    today,
     daysOfWeek,
-    currentMonth,
-    currentYear,
-    getActivitiesByDay,
-    goToMonth,
+    calendarDays,
+    getEventsByDay,
+    handlePrevMonth,
+    handleNextMonth,
   };
 };
