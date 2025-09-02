@@ -1,222 +1,96 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
-import type { Activity, CalendarFilters } from "./indexModel";
-//import { mockActivities } from "./indexModel";
-import type { AbstractResponse } from "../../interfaces/AbstractInterfaces";
+import { 
+  useState, 
+  useEffect, 
+  useCallback 
+} from "react";
 import api from "../../api";
+import type { Event } from "./indexModel";
+import type { AbstractResponse } from "../../interfaces/AbstractInterfaces";
 
 export const useCalendarPageController = () => {
-  const [refreshKey, setRefreshKey] = useState(0);
-  const [filters, setFilters] = useState<CalendarFilters>({
-    searchValue: "",
-    discipline: "",
-    type: "",
-  });
-
-  const [activities, setActivities] = useState<Activity[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [editingActivity, setEditingActivity] = useState<Activity | null>(null);
-  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
 
-  console.log("Editing activity:", editingActivity);
-  const fetchActivities = useCallback(async () => {
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+
+  const fetchEvents = useCallback(async () => {
     setLoading(true);
     setError(null);
-
     try {
-      const response = await api.get<AbstractResponse<Activity[]>>("/eventos");
-      if (!response.data.success) {
-        throw new Error("Erro ao buscar eventos");
-      }
-      setActivities(response.data.data || []);
+      const response = await api.get<AbstractResponse<Event[]>>("/eventos");
+      setEvents(response.data.data || []);
     } catch (err: any) {
-      setError(err.message || "Erro inesperado");
+      setError(err.message || "Erro ao carregar eventos");
     } finally {
       setLoading(false);
     }
   }, []);
 
-  const forceRefresh = useCallback(() => {
-    console.log("Manual refresh");
-    fetchActivities();
-  }, [fetchActivities]);
-
   useEffect(() => {
-    fetchActivities();
-  }, [fetchActivities]);
+    fetchEvents();
+  }, [fetchEvents]);
 
-  const updateActivity = useCallback(
-    async (activity: Activity) => {
-      setLoading(true);
-      setError(null);
-
-      try {
-        const response = await api.put<AbstractResponse<Activity>>(
-          `/eventos/${activity.id}`,
-          {
-            titulo: activity.titulo,
-            descricao: activity.descricao,
-            inicio: activity.inicio,
-            fim: activity.fim,
-          }
-        );
-
-        console.log(response);
-
-        if (!response.data) {
-          throw new Error("Erro ao atualizar evento");
-        }
-
-        await fetchActivities();
-
-        return response.data;
-      } catch (err: any) {
-        await fetchActivities();
-        setError(err.message || "Erro inesperado");
-        throw err;
-      } finally {
-        setLoading(false);
+  const handleDeleteEvent = async () => {
+    if (!selectedEvent) return;
+    setLoading(true);
+    try {
+      const response = await api.delete<AbstractResponse<void>>(
+        `/eventos/${selectedEvent.id}`
+      );
+      await fetchEvents();
+      if (response.data.success) {
+        setIsDeleteModalOpen(false);
+        setSelectedEvent(null);
+      } else {
+        throw new Error(response.data.message || "Erro ao excluir evento");
       }
-    },
-    [fetchActivities]
-  );
+    } catch (err: any) {
+      setError(err.message || "Erro ao excluir evento");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const handleEditActivity = useCallback((activity: Activity) => {
-    setEditingActivity(activity);
+  const handleOpenEditModal = (event: Event) => {
+    setSelectedEvent(event);
     setIsEditModalOpen(true);
-  }, []);
+  };
 
-  const handleCloseEditModal = useCallback(() => {
-    setIsEditModalOpen(false);
-    setEditingActivity(null);
-  }, []);
+  const handleOpenDeleteModal = (event: Event) => {
+    setSelectedEvent(event);
+    setIsDeleteModalOpen(true);
+  };
 
-  const handleEditSubmit = useCallback(
-    async (formData: any) => {
-      console.log("=== DEBUG handleEditSubmit ===");
-      console.log("formData recebido:", formData);
-
-      const formatarDataParaBackend = (dataString: string) => {
-        if (!dataString) return null;
-
-        try {
-          const data = new Date(dataString);
-
-          if (isNaN(data.getTime())) {
-            console.error("Data inválida:", dataString);
-            return null;
-          }
-
-          return data.toISOString();
-        } catch (error) {
-          console.error("Erro ao formatar data:", error);
-          return null;
-        }
-      };
-
-      const dadosParaBackend = {
-        titulo: formData.title,
-        descricao: formData.description,
-        inicio: formatarDataParaBackend(formData.startDate),
-        fim: formatarDataParaBackend(formData.endDate),
-      };
-
-      console.log("Dados para backend:", dadosParaBackend);
-
-      try {
-        if (editingActivity && editingActivity.id) {
-          const dadosCompletos = {
-            id: editingActivity.id,
-            ...dadosParaBackend,
-            type: editingActivity.type,
-          } as Activity;
-
-          await updateActivity(dadosCompletos);
-          handleCloseEditModal();
-        }
-      } catch (err) {
-        console.error("Erro ao atualizar atividade:", err);
-      }
-    },
-    [editingActivity, updateActivity, handleCloseEditModal]
-  );
-
-  const deleteActivity = useCallback(
-    async (id: number) => {
-      setLoading(true);
-      setError(null);
-
-      try {
-        const response = await api.delete<AbstractResponse<void>>(
-          `/eventos/${id}`
-        );
-
-        console.log(response);
-
-        // if (!response.data) {
-        //   throw new Error("Erro ao atualizar evento");
-        // }
-
-        await fetchActivities();
-        return response.data;
-      } catch (err: any) {
-        await fetchActivities();
-        setError(err.message || "Erro inesperado");
-        throw err;
-      } finally {
-        setLoading(false);
-      }
-    },
-    [fetchActivities]
-  );
-
-  const handleDeleteActivity = useCallback(
-    async (id: number) => {
-      if (window.confirm("Tem certeza que deseja excluir esta atividade?")) {
-        try {
-          await deleteActivity(id);
-        } catch (err) {
-          console.error("Erro ao excluir atividade:", err);
-        }
-      }
-    },
-    [deleteActivity]
-  );
-
-  const filteredActivities = useMemo(() => {
-    return activities.filter((activity) => {
-      if (!activity) return false;
-
-      const activityTitle = activity.titulo || "";
-      const searchValue = filters?.searchValue || "";
-
-      const matchesSearch = activityTitle
-        .toLowerCase()
-        .includes(searchValue.toLowerCase());
-
-      // const matchesDiscipline = filters?.discipline
-      //   ? activity.discipline === filters.discipline
-      //   : true;
-
-      const matchesType = filters?.type ? activity.type === filters.type : true;
-
-      return matchesSearch && matchesType;
-    });
-  }, [activities, filters]);
+  const handleMonthChange = (month: number, year: number) => {
+    setCurrentMonth(month);
+    setCurrentYear(year);
+  };
 
   return {
-    filters,
-    setFilters,
-    activities: filteredActivities,
+    events,
     loading,
     error,
-    editingActivity,
+    isCreateModalOpen,
+    setIsCreateModalOpen,
     isEditModalOpen,
-    handleEditActivity,
-    handleCloseEditModal,
-    handleEditSubmit,
-    handleDeleteActivity,
-    fetchActivities,
-    forceRefresh,
+    setIsEditModalOpen,
+    isDeleteModalOpen,
+    setIsDeleteModalOpen,
+    selectedEvent,
+    setSelectedEvent,
+    handleDeleteEvent,
+    handleOpenEditModal,
+    handleOpenDeleteModal,
+    currentMonth,
+    currentYear,
+    handleMonthChange,
+    fetchEvents
   };
 };

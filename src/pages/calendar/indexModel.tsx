@@ -1,21 +1,25 @@
-export type ActivityType = 'Estudo' | 'Simulado' | 'Revisão';
+export type EventType = 'Estudo' | 'Simulado' | 'Revisão';
 
-export interface Activity {
+export interface Event {
   id: number;
   titulo: string;
-  //time: string;
-  //location: string;
+  descricao?: string;
+  usuarioId?: number;
   inicio: string;
   fim: string;
-  descricao: string;
-  //discipline: string;
-  type: ActivityType;
+  itens?: ItemChecklist[];
 }
 
-export interface CalendarFilters {
-  searchValue: string;
-  discipline: string;
-  type: ActivityType | '';
+export interface ItemChecklist {
+  id: number;
+  nome: string;
+  concluido: boolean;
 }
 
-
+export interface EventFormData {
+  titulo: string;
+  descricao?: string;
+  usuarioId?: number;
+  inicio: string;
+  fim: string;
+}
