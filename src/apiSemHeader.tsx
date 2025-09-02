@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const apiWithoutAuthHeader = axios.create({
-    // baseURL: 'https://certifai-backend.onrender.com/certifai',
-    baseURL: 'http://localhost:8081/certifai',
+    baseURL: 'https://certifai-backend.onrender.com/certifai',
     headers: {
         'Content-Type': 'application/json',
     },
