@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://certifai-backend.onrender.com/certifai', 
+    baseURL: 'https://certifai-backend.onrender.com/certifai',
     headers: {
         'Content-Type': 'application/json',
     },
