@@ -70,6 +70,9 @@ O projeto segue uma arquitetura baseada no padrão **MVC (Model-View-Controller)
 - ✅ Integração com Google OAuth
 - ✅ Validação de formulários em tempo real
 - ✅ Diferentes perfis de usuário
+- ✅ Cadastro de certificações
+- ✅ Cadastro de questões
+- ✅ Montagem de calendário de estudos
 
 ### Interface
 - ✅ Design responsivo
