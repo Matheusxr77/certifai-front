@@ -12,6 +12,9 @@ export const useCalendarPageController = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
+  const toggleSidebar = useCallback(() => setIsSidebarExpanded((prev) => !prev), []);
+
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -32,6 +35,12 @@ export const useCalendarPageController = () => {
       setLoading(false);
     }
   }, []);
+
+  const handleRefresh = useCallback(() => {
+    if (!loading) {
+      fetchEvents();
+    }
+  }, [loading, fetchEvents]);
 
   useEffect(() => {
     fetchEvents();
@@ -77,6 +86,9 @@ export const useCalendarPageController = () => {
     events,
     loading,
     error,
+    isSidebarExpanded,
+    toggleSidebar,
+    handleRefresh,
     isCreateModalOpen,
     setIsCreateModalOpen,
     isEditModalOpen,
