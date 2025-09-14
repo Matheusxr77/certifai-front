@@ -45,8 +45,7 @@ export const dashboardCardsConfig: DashboardCard[] = [
         title: 'Checklist de Preparação',
         description: 'Organize seus estudos com listas de tarefas personalizadas.',
         icon: 'FiCheckSquare',
-        // path: '/checklist-preparacao'
-        path: '/under-construction'
+        path: '/checklist'
     },
     {
         id: 'calendario-estudos',

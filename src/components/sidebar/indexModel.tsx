@@ -122,8 +122,7 @@ export const navigationItems: NavigationItem[] = [
     {
         id: 'checklist-preparacao',
         label: 'Checklist de Preparação',
-        // path: '/checklist-preparacao',
-        path: '/under-construction',
+        path: '/checklist',
         icon: sidebarIcons.checkSquare,
         tooltipId: 'nav-tooltip'
     },
