@@ -30,7 +30,7 @@ export const dashboardCardsConfig: DashboardCard[] = [
         title: 'Provas',
         description: 'Gerencie e pratique com simulados baseados em provas reais.',
         icon: 'FiEdit3',
-        path: '/under-construction'
+        path: '/tests'
     },
     {
         id: 'relatorio-desempenho',
@@ -53,7 +53,6 @@ export const dashboardCardsConfig: DashboardCard[] = [
         title: 'Calendário de Estudos',
         description: 'Planeje e acompanhe sua rotina de estudos.',
         icon: 'FiCalendar',
-        // path: '/calendario-estudos'
         path: '/calendar'
     },
     {

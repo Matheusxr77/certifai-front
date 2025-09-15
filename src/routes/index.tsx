@@ -16,7 +16,8 @@ import Management from '../pages/management/index.tsx';
 import Certifications from '../pages/certifications/index.tsx';
 import Questions from '../pages/questions/index.tsx';
 import Calendar from '../pages/calendar/index.tsx';
-
+import Tests from '../pages/tests/index.tsx';
+import Simulation from '../pages/tests/components/Simulation/index.tsx';
 
 function AppRoutes() {
     return (
@@ -34,7 +35,8 @@ function AppRoutes() {
             <Route path="/certifications" element={<Certifications />} />
             <Route path="/questions" element={<Questions />} />
             <Route path="/calendar" element={<Calendar />} />
-
+            <Route path="/tests" element={<Tests />} />
+            <Route path="/tests/simulation/:provaId" element={<Simulation />} />
         </Routes>
     );
 }
