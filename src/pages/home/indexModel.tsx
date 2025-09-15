@@ -37,8 +37,7 @@ export const dashboardCardsConfig: DashboardCard[] = [
         title: 'Relatório de Desempenho',
         description: 'Acompanhe seu progresso e identifique pontos de melhoria.',
         icon: 'FiBarChart3',
-        // path: '/relatorio-desempenho'
-        path: '/under-construction'
+        path: '/performance'
     },
     {
         id: 'checklist-preparacao',
