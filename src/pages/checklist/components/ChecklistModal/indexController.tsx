@@ -14,13 +14,15 @@ export const useChecklistModalController = (
   onCreate: (
     nome: string,
     itensChecklist: ChecklistItem[],
-    certificacaoId: number
+    certificacao_id: number,
+    descricao?: string
   ) => void,
   onUpdate: (
     id: number,
     nome: string,
     itensChecklist: ChecklistItem[],
-    certificacaoId: number
+    certificacao_id: number,
+    descricao?: string
   ) => void,
   onClose: () => void
 ) => {
@@ -32,6 +34,7 @@ export const useChecklistModalController = (
         : {
             id: checklist!.id,
             nome: checklist!.nome,
+            descricao: checklist!.descricao || "",
             itensChecklist: (checklist!.itensChecklist || []).map((item) => ({
               id: item.id ?? Date.now(),
               descricao: item.descricao || "",
@@ -39,6 +42,7 @@ export const useChecklistModalController = (
             })),
           },
     nome: checklist?.nome || "",
+    descricao: checklist?.descricao || "",
     itensChecklist:
       mode === "create"
         ? [{ id: Date.now(), descricao: "", concluido: false }]
@@ -48,7 +52,7 @@ export const useChecklistModalController = (
             concluido: item.concluido ?? false,
           })),
 
-    certificacaoId: checklist?.certificacaoId || null,
+    certificacao_id: checklist?.certificacao_id || null,
   });
 
 
@@ -105,9 +109,11 @@ export const useChecklistModalController = (
         };
         return { ...prev, itensChecklist: newItensChecklist };
       }
-
-      if (field === "certificacaoId") {
+      if (field === "certificacao_id") {
         return { ...prev, [field]: Number(value) };
+      }
+      if (field === "descricao") {
+        return { ...prev, descricao: value };
       }
       return { ...prev, [field]: value };
     });
@@ -129,12 +135,10 @@ export const useChecklistModalController = (
     console.log("Dados do model:", model);
     
     if (!model.nome.trim()) {
-      //alert("Por favor, informe um nome para a checklist");
       return;
     }
 
-    if (model.certificacaoId === null) {
-     // alert("Por favor, selecione uma certificação");
+    if (model.certificacao_id === null) {
       return;
     }
 
@@ -146,14 +150,13 @@ export const useChecklistModalController = (
     }));
 
     if (itensChecklistValidos.length === 0) {
-     // alert("Por favor, adicione pelo menos um item à checklist");
       return;
     }
 
     if (mode === "create") {
-      onCreate(model.nome, itensChecklistValidos, model.certificacaoId);
+      onCreate(model.nome, itensChecklistValidos, model.certificacao_id, model.descricao);
     } else {
-      onUpdate(checklist!.id, model.nome, itensChecklistValidos, model.certificacaoId);
+      onUpdate(checklist!.id, model.nome, itensChecklistValidos, model.certificacao_id, model.descricao);
     }
    
 

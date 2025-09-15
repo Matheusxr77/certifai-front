@@ -8,6 +8,7 @@ export interface Checklist {
   id: number;
   nome: string;
   itensChecklist: ChecklistItem[]; 
+  descricao?: string;
 }
 
 
@@ -16,7 +17,8 @@ export type ChecklistModalMode = "create" | "edit" | "view";
 export interface ChecklistModalModel {
   mode: ChecklistModalMode;
   checklist: Checklist | null; 
-  certificacaoId: number | null;
+  certificacao_id: number | null;
   nome: string;
+  descricao?: string;
   itensChecklist: ChecklistItem[];
 }

@@ -70,17 +70,16 @@ export const useChecklistController = () => {
   const handleCreateChecklist = async (
     nome: string,
     itens: ChecklistItem[],
-    certificacaoId: number
+    certificacao_id: number,
+    descricao?: string
   ) => {
-    console.log(certificacaoId);
+    console.log(certificacao_id);
     try {
       if (!nome.trim()) {
-       // alert("Por favor, informe um nome para a checklist");
         return;
       }
 
-      if (!certificacaoId || certificacaoId <= 0) {
-       // alert("Por favor, selecione uma certificação");
+      if (!certificacao_id || certificacao_id <= 0) {
         return;
       }
 
@@ -93,13 +92,13 @@ export const useChecklistController = () => {
         }));
 
       if (itensChecklistValidos.length === 0) {
-       // alert("Por favor, adicione pelo menos um item à checklist");
         return;
       }
 
       const checklistDTO = {
         nome,
-        certificacao_id: certificacaoId,
+        descricao,
+        certificacao_id: certificacao_id,
         itensChecklist: itensChecklistValidos,
       };
 
@@ -112,18 +111,12 @@ export const useChecklistController = () => {
 
       if (response.status === 201 && response.data) {
         console.log("Checklist criada com sucesso:", response.data);
-        //alert("Checklist criada com sucesso!");
         refreshChecklists(); 
       } else {
         throw new Error(response.statusText || "Erro ao criar checklist");
       }
     } catch (error) {
       console.error("Erro ao criar checklist:", error);
-     // alert(
-     //   `Erro ao criar checklist: ${
-      //    error instanceof Error ? error.message : "Erro desconhecido"
-      //  }`
-      //);
     }
   };
 
@@ -146,10 +139,11 @@ export const useChecklistController = () => {
     id: number,
     nome: string,
     itens: any[],
-    certificacaoId: number
+    certificacao_id: number,
+    descricao?: string
   ) => {
     try {
-      console.log("Atualizando checklist:", { id, nome, itens, certificacaoId });
+      console.log("Atualizando checklist:", { id, nome, itens, certificacao_id });
       
       const itensChecklistValidos = itens.map((item) => ({
         descricaoItem: item.descricao || item.descricaoItem,
@@ -159,7 +153,8 @@ export const useChecklistController = () => {
   
       const checklistDTO = {
         nome,
-        certificacao_id: certificacaoId,
+        descricao,
+        certificacao_id: certificacao_id,
         itensChecklist: itensChecklistValidos,
       };
   

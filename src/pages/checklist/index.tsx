@@ -129,35 +129,50 @@ console.log("Checklists:", filteredChecklists);
             </div>
           </div>
 
-          {/* Filtros e busca */}
-          <div className="filters-section">
-            <div className="search-container">
-              <FiSearch className="search-icon" />
-              <input
-                type="text"
-                placeholder="Buscar checklist..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-input"
-              />
-            </div>
-
-            <div className="filter-container">
-              <FiFilter className="filter-icon" />
-              <select
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
-                className="filter-select"
-              >
-                <option value="todos">Todos</option>
-                <option value="concluidos">Concluídos</option>
-                <option value="pendentes">Pendentes</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Grid de cards */}
+          {/* Container envolve filtros e grid */}
           <div className="checklist-grid-container">
+            {/* Filtros e busca */}
+            <div className="filters-section">
+              <div className="search-container">
+                <FiSearch className="search-icon" />
+                <input
+                  type="text"
+                  placeholder="Buscar checklist..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="search-input"
+                />
+              </div>
+
+              <div className="filter-container">
+                <FiFilter className="filter-icon" />
+                <select
+                  value={filterStatus}
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                  className="filter-select"
+                >
+                  <option value="todos">Todos</option>
+                  <option value="concluidos">Concluídos</option>
+                  <option value="pendentes">Pendentes</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Cabeçalho da lista */}
+            <div className="checklist-list-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 1.5rem', marginBottom: '1.5rem', marginTop: '2rem', paddingBottom: '1rem' }}>
+              <h2 className="checklist-list-title" style={{ fontSize: '1.45rem', fontWeight: 600, color: 'var(--text-light)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                Lista de Checklists
+              </h2>
+              <span className="checklist-count" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
+                {visibleChecklists.length === 0
+                  ? 'Nenhuma checklist encontrada'
+                  : visibleChecklists.length === 1
+                  ? '1 checklist encontrada'
+                  : `${visibleChecklists.length} checklists encontradas`}
+              </span>
+            </div>
+
+            {/* Grid de cards */}
             {error && <p className="error-message">{error}</p>}
 
             {visibleChecklists.length === 0 ? (

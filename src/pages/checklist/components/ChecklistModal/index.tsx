@@ -10,9 +10,8 @@ interface ChecklistModalProps {
   mode: ChecklistModalMode;
   checklist?: Checklist | null;
   onClose: () => void;
-  onCreate: (nome: string, itens: ChecklistItem[], certificacaoId: number) => void;
-  onUpdate: (id: number, nome: string, itens: ChecklistItem[], certificacaoId: number) => void;
-  
+  onCreate: (nome: string, itens: ChecklistItem[], certificacao_id: number, descricao?: string) => void;
+  onUpdate: (id: number, nome: string, itens: ChecklistItem[], certificacao_id: number, descricao?: string) => void;
 }
 
 const ChecklistModal: React.FC<ChecklistModalProps> = ({
@@ -53,15 +52,23 @@ const ChecklistModal: React.FC<ChecklistModalProps> = ({
               onChange={(e) => updateField("nome", e.target.value)}
             />
           </div>
-
+          <div className="modal-checklist-form-group full-width">
+            <label>Descrição</label>
+            <input
+              type="text"
+              placeholder="Digite uma descrição para a checklist"
+              value={model.descricao}
+              onChange={e => updateField("descricao", e.target.value)}
+            />
+          </div>
           <div className="modal-checklist-form-group full-width">
             <label>Certificação</label>
             <select
-              value={model.certificacaoId || 0}
+              value={model.certificacao_id || 0}
               onChange={(e) =>
                 setModel((prev) => ({
                   ...prev,
-                  certificacaoId: Number(e.target.value),
+                  certificacao_id: Number(e.target.value),
                 }))
               }
             >

@@ -11,9 +11,9 @@ export interface ItemChecklist {
 export interface Checklist {
   id: number;
   nome: string;
-  descricao: string;
+  descricao?: string;
   itensChecklist: ItemChecklist[];
-  certificacaoId?: number;
+  certificacao_id?: number;
   usuarioId?: number;
 }
 
@@ -28,8 +28,8 @@ export interface ChecklistModel {
 
 // REMOVA os dados mockados da initial state
 export const initialChecklistModel: ChecklistModel = {
-  checklists: [], // Array vazio - os dados virão do banco
-  isLoading: true, // Inicia como true para mostrar loading
+  checklists: [],
+  isLoading: true,
   error: null,
   showModal: false,
   selectedChecklist: null,
@@ -44,7 +44,7 @@ export const useChecklistModel = () => {
   };
 
   const getFilteredChecklists = () => {
-    return model.checklists; 
+    return model.checklists;
   };
 
   return {
