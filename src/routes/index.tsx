@@ -19,6 +19,7 @@ import Calendar from '../pages/calendar/index.tsx';
 import Checklist from '../pages/checklist/index.tsx';
 import Tests from '../pages/tests/index.tsx';
 import Simulation from '../pages/tests/components/Simulation/index.tsx';
+import Performance from '../pages/performance/index.tsx';
 
 function AppRoutes() {
     return (
@@ -39,6 +40,7 @@ function AppRoutes() {
             <Route path="/checklist" element={<Checklist />} />
             <Route path="/tests" element={<Tests />} />
             <Route path="/tests/simulation/:provaId" element={<Simulation />} />
+            <Route path="/performance" element={<Performance />} />
         </Routes>
     );
 }

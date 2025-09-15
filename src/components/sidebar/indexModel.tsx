@@ -113,8 +113,7 @@ export const navigationItems: NavigationItem[] = [
     {
         id: 'relatorio-desempenho',
         label: 'Relatório de Desempenho',
-        // path: '/relatorio-desempenho',
-        path: '/under-construction',
+        path: '/performance',
         icon: sidebarIcons.barChart,
         tooltipId: 'nav-tooltip'
     },
