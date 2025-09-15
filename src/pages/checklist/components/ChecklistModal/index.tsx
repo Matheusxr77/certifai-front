@@ -12,11 +12,7 @@ interface ChecklistModalProps {
   onClose: () => void;
   onCreate: (nome: string, itens: ChecklistItem[], certificacaoId: number) => void;
   onUpdate: (id: number, nome: string, itens: ChecklistItem[], certificacaoId: number) => void;
-  onToggleItem?: (
-    checklistId: number,
-    itemId: number,
-    concluido: boolean
-  ) => void;
+  
 }
 
 const ChecklistModal: React.FC<ChecklistModalProps> = ({
@@ -25,7 +21,6 @@ const ChecklistModal: React.FC<ChecklistModalProps> = ({
   onClose,
   onCreate,
   onUpdate,
-  onToggleItem,
 }) => {
   const {
     model,

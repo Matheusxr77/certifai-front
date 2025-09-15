@@ -27,7 +27,7 @@ const ChecklistPage: React.FC = () => {
     toggleSidebar,
     handleCreateChecklist,
     handleUpdateChecklist,
-    handleToggleItem,
+   // handleToggleItem,
     handleDeleteChecklist,
     
   } = useChecklistController();
@@ -236,7 +236,6 @@ console.log("Checklists:", filteredChecklists);
           onClose={closeModal}
           onCreate={handleCreateChecklist}
           onUpdate={handleUpdateChecklist}
-          onToggleItem={handleToggleItem}
         />
       )}
     </div>

@@ -127,21 +127,20 @@ export const useChecklistController = () => {
     }
   };
 
-  const handleToggleItem = async (
-    checklistId: number,
-    itemId: number,
-    concluido: boolean
-  ) => {
-    try {
-      await api.put<AbstractResponse<Checklist>>(
-        `/itens-checklist/${itemId}`,
-        concluido
-      );
-      refreshChecklists();
-    } catch (error) {
-      console.error("Erro ao atualizar item:", error);
-    }
-  };
+  // const handleToggleItem = async (
+  //   itemId: number,
+  //   concluido: boolean
+  // ) => {
+  //   try {
+  //     await api.put<AbstractResponse<Checklist>>(
+  //       `/itens-checklist/${itemId}`,
+  //       concluido
+  //     );
+  //     refreshChecklists();
+  //   } catch (error) {
+  //     console.error("Erro ao atualizar item:", error);
+  //   }
+  // };
 
   const handleUpdateChecklist = async (
     id: number,
@@ -210,7 +209,7 @@ export const useChecklistController = () => {
     refreshChecklists,
     handleDeleteChecklist,
     handleUpdateChecklist,
-    handleToggleItem,
+  //  handleToggleItem,
     handleCreateChecklist,
   };
 };
