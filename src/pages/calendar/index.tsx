@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { FiCalendar, FiRefreshCw } from "react-icons/fi";
 import Sidebar from "../../components/sidebar";
 import EventModal from "./components/EventModal";
@@ -8,12 +8,13 @@ import { useCalendarPageController } from "./indexController";
 import "./styles.css";
 
 const StudyCalendarPage: React.FC = () => {
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
-
   const {
     events,
     loading,
     error,
+    isSidebarExpanded,
+    toggleSidebar,
+    handleRefresh,
     isCreateModalOpen,
     setIsCreateModalOpen,
     isEditModalOpen,
@@ -30,16 +31,6 @@ const StudyCalendarPage: React.FC = () => {
     handleMonthChange,
     fetchEvents,
   } = useCalendarPageController();
-
-  const toggleSidebar = () => setIsSidebarExpanded((prev) => !prev);
-
-  const handleRefresh = () => {
-    if (!loading) {
-      (async () => {
-        await fetchEvents();
-      })();
-    }
-  };
 
   return (
     <div

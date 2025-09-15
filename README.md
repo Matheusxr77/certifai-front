@@ -70,6 +70,9 @@ O projeto segue uma arquitetura baseada no padrão **MVC (Model-View-Controller)
 - ✅ Integração com Google OAuth
 - ✅ Validação de formulários em tempo real
 - ✅ Diferentes perfis de usuário
+- ✅ Cadastro de certificações
+- ✅ Cadastro de questões
+- ✅ Montagem de calendário de estudos
 
 ### Interface
 - ✅ Design responsivo
@@ -129,3 +132,9 @@ O projeto é totalmente responsivo e otimizado para:
 - Mantenha os testes atualizados
 - Use nomes descritivos para variáveis e funções
 - Documente funções complexas
+
+## Informações sobre o Projeto
+
+- [Termo de Abertura do Projeto (TAP)](https://drive.google.com/file/d/1duV6n9zu65UGFHoc0tcblKy3vAvIQrbE/view?usp=sharing)
+- [Estudo de Viabilidade](https://drive.google.com/file/d/10sI4_1nXo9czEw0gfo5yPX--armzI8Ae/view?usp=sharing)
+- [Plano de Projeto](https://drive.google.com/file/d/1iVBfyaF3_tIIAzdl543iz5sF2q-njH8U/view?usp=sharing)

@@ -106,8 +106,7 @@ export const navigationItems: NavigationItem[] = [
     {
         id: 'simulacao-provas',
         label: 'Provas',
-        // path: '/simulacao-provas',
-        path: '/under-construction',
+        path: '/tests',
         icon: sidebarIcons.edit,
         tooltipId: 'nav-tooltip'
     },
@@ -129,7 +128,6 @@ export const navigationItems: NavigationItem[] = [
     {
         id: 'calendario-estudos',
         label: 'Calendário de Estudos',
-        // path: '/calendario-estudos',
         path: '/calendar',
         icon: sidebarIcons.calendar,
         tooltipId: 'nav-tooltip'
